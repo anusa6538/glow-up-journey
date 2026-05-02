@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>✨ Glow Up Journey</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FF6B9D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Glow Up">
+  <link rel="apple-touch-icon" href="icon-192.svg">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- SEO / Share -->
+  <meta name="description" content="Your daily wellness companion — calorie-deficit recipes, home workouts, hydration tracker & weather outfit ideas.">
+  <meta property="og:title" content="✨ Glow Up Journey">
+  <meta property="og:description" content="Healthy recipes, home workouts, hydration & weather outfit ideas — all in one cute app!">
+  <meta property="og:type" content="website">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --pink:#FF6B9D;--pink-light:#FFE0EE;--pink-dark:#E91E8C;
+      --mint:#4ECDC4;--mint-light:#E0F9F7;
+      --yellow:#FFD93D;--yellow-light:#FFFAEB;
+      --lavender:#A78BFA;--lavender-light:#F3E8FF;
+      --coral:#FF8066;--coral-light:#FFE8E0;
+      --green:#6BCB77;--green-light:#E8F9EA;
+      --blue:#60A5FA;--blue-light:#DBEAFE;
+      --bg:#FFF0F5;--white:#FFFFFF;
+      --text:#2D2D2D;--muted:#9CA3AF;
+      --shadow:0 4px 20px rgba(255,107,157,0.13);
+      --shadow-hover:0 8px 30px rgba(255,107,157,0.25);
+      --r:20px;--rs:12px;
+    }
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-thumb{background:var(--pink-light);border-radius:99px}
+
+    /* ── HEADER ── */
+    header{background:linear-gradient(135deg,#FF6B9D 0%,#A78BFA 50%,#60A5FA 100%);padding:24px 32px 20px;color:white;position:relative;overflow:hidden}
+    header::before{content:'';position:absolute;top:-40%;right:-5%;width:380px;height:380px;background:rgba(255,255,255,0.08);border-radius:50%}
+    header::after{content:'';position:absolute;bottom:-50%;left:15%;width:260px;height:260px;background:rgba(255,255,255,0.05);border-radius:50%}
+    .hc{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+    .app-name{font-size:26px;font-weight:900;letter-spacing:-0.5px}
+    .app-sub{font-size:13px;opacity:0.8;margin-top:3px}
+    .h-right{text-align:right}
+    .greeting{font-size:17px;font-weight:700}
+    .h-date{font-size:12px;opacity:0.75;margin-top:3px}
+    .quote-bar{background:rgba(255,255,255,0.18);backdrop-filter:blur(12px);border-radius:12px;padding:10px 18px;margin-top:14px;font-size:13px;font-style:italic;position:relative;z-index:1;max-width:640px}
+
+    /* ── NAV ── */
+    .nav{background:white;display:flex;gap:2px;box-shadow:0 2px 10px rgba(0,0,0,0.06);position:sticky;top:0;z-index:200;overflow-x:auto;padding:0 20px}
+    .nav-btn{padding:13px 18px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted);border:none;background:none;border-bottom:2.5px solid transparent;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px}
+    .nav-btn.active{color:var(--pink);border-bottom-color:var(--pink)}
+    .nav-btn:hover:not(.active){color:var(--text)}
+
+    /* ── CONTAINER ── */
+    .wrap{max-width:1200px;margin:0 auto;padding:22px 18px}
+    .sec{display:none}.sec.active{display:block}
+
+    /* ── STAT CARDS ── */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .sc{background:white;border-radius:var(--r);padding:18px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s;cursor:default}
+    .sc:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+    .sc-icon{font-size:26px;margin-bottom:6px}
+    .sc-val{font-size:22px;font-weight:800;line-height:1}
+    .sc-lbl{font-size:11px;color:var(--muted);margin-top:3px}
+    .bar{margin-top:10px;height:5px;background:#F3F4F6;border-radius:99px;overflow:hidden}
+    .bar-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+
+    /* ── MAIN GRID ── */
+    .mg{display:grid;grid-template-columns:1fr 370px;gap:20px;margin-bottom:28px}
+    .card{background:white;border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+    .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .ct{font-size:16px;font-weight:700;display:flex;align-items:center;gap:7px}
+
+    /* ── CALORIE SUMMARY ── */
+    .cal-sum{display:flex;align-items:center;gap:16px;padding:14px;background:linear-gradient(135deg,var(--pink-light),var(--lavender-light));border-radius:var(--rs);margin-bottom:14px}
+    .ring-wrap{position:relative;width:76px;height:76px;flex-shrink:0}
+    .ring-svg{width:76px;height:76px;transform:rotate(-90deg)}
+    .ring-txt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+    .ring-num{font-size:15px;font-weight:800;color:var(--pink);line-height:1}
+    .ring-lbl{font-size:8px;color:var(--muted)}
+    .macro-r{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+    .ml{font-size:11px;color:var(--muted);width:52px}
+    .mb{flex:1;height:5px;background:#F3F4F6;border-radius:99px;margin:0 7px;overflow:hidden}
+    .mbf{height:100%;border-radius:99px}
+    .mv{font-size:11px;font-weight:600;width:36px;text-align:right}
+
+    /* ── MEAL ITEMS ── */
+    .meal{display:flex;align-items:center;padding:11px;border-radius:var(--rs);background:var(--bg);margin-bottom:9px;transition:all .2s;cursor:pointer;gap:11px}
+    .meal:hover{transform:translateX(4px);background:var(--pink-light)}
+    .meal.logged{background:var(--green-light)}
+    .me{font-size:26px;flex-shrink:0}
+    .mi{flex:1}
+    .mn{font-weight:600;font-size:13px}
+    .mt{font-size:11px;color:var(--muted)}
+    .mc{font-size:13px;font-weight:700;color:var(--pink);flex-shrink:0}
+    .mck{width:26px;height:26px;border-radius:50%;border:2px solid #E5E7EB;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s;flex-shrink:0}
+    .meal.logged .mck{background:var(--green);border-color:var(--green);color:white}
+
+    /* ── HYDRATION ── */
+    .h2o-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin:12px 0}
+    .wc{aspect-ratio:1;border-radius:9px;border:2px solid #BAE6FD;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);background:white}
+    .wc.filled{background:linear-gradient(180deg,#BAE6FD,#60A5FA);border-color:#60A5FA;transform:scale(1.06)}
+    .wc:hover:not(.filled){border-color:#60A5FA;transform:scale(1.05)}
+    .h2o-info{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+    .h2o-count{font-weight:700;color:#60A5FA;font-size:14px}
+
+    /* ── WEATHER ── */
+    .wx{background:linear-gradient(135deg,#667EEA,#764BA2);color:white;border-radius:var(--r);padding:22px;margin-bottom:14px;box-shadow:0 8px 30px rgba(102,126,234,.3)}
+    .wx-main{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+    .wx-icon{font-size:54px;line-height:1}
+    .wx-temp{font-size:40px;font-weight:800;line-height:1}
+    .wx-desc{font-size:13px;opacity:.85}
+    .wx-city{font-size:11px;opacity:.65;margin-top:2px}
+    .outfit{background:rgba(255,255,255,.15);border-radius:var(--rs);padding:12px;margin-top:6px}
+    .outfit-title{font-size:11px;opacity:.8;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+    .outfit-tags{display:flex;gap:6px;flex-wrap:wrap}
+    .otag{background:rgba(255,255,255,.2);border-radius:99px;padding:4px 11px;font-size:11px}
+    .wx-loading{text-align:center;padding:32px;opacity:.75}
+    .spinner{width:28px;height:28px;border:3px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 10px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── WORKOUT CARDS ── */
+    .wk-item{border-radius:var(--rs);padding:14px;margin-bottom:10px;cursor:pointer;transition:all .2s;border:2px solid transparent}
+    .wk-item:hover{transform:translateY(-2px)}
+    .wk-item.hiit{background:var(--coral-light)}.wk-item.hiit:hover{border-color:var(--coral)}
+    .wk-item.yoga{background:var(--lavender-light)}.wk-item.yoga:hover{border-color:var(--lavender)}
+    .wk-item.strength{background:var(--green-light)}.wk-item.strength:hover{border-color:var(--green)}
+    .wk-item.cardio{background:var(--blue-light)}.wk-item.cardio:hover{border-color:var(--blue)}
+    .wk-top{display:flex;justify-content:space-between;align-items:flex-start}
+    .wk-name{font-weight:700;font-size:14px}
+    .badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+    .badge{font-size:10px;padding:3px 9px;border-radius:99px;font-weight:600}
+    .bp{background:var(--pink-light);color:var(--pink)}
+    .bc{background:var(--coral-light);color:var(--coral)}
+    .bg{background:var(--green-light);color:var(--green)}
+    .bl{background:var(--lavender-light);color:var(--lavender)}
+    .by{background:var(--yellow-light);color:#D97706}
+    .bm{background:var(--mint-light);color:var(--mint)}
+    .bb{background:var(--blue-light);color:var(--blue)}
+
+    /* ── TABS ── */
+    .tabs{display:flex;gap:7px;margin-bottom:18px;overflow-x:auto;padding-bottom:3px}
+    .tab{padding:7px 18px;border-radius:99px;border:2px solid #E5E7EB;background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+    .tab.active{background:var(--pink);border-color:var(--pink);color:white}
+    .tab:hover:not(.active){border-color:var(--pink);color:var(--pink)}
+
+    /* ── RECIPE GRID ── */
+    .recipe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    .rc{background:white;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:all .2s;cursor:pointer}
+    .rc:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+    .rc-head{height:76px;display:flex;align-items:center;justify-content:center;font-size:46px}
+    .rc-body{padding:14px}
+    .rc-name{font-weight:700;font-size:14px;margin-bottom:6px}
+    .rc-cal{font-size:22px;font-weight:800;color:var(--pink);line-height:1}
+    .rc-cal-lbl{font-size:10px;color:var(--muted)}
+    .rc-macros{display:flex;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid #F3F4F6}
+    .rm{text-align:center;flex:1}
+    .rm-v{font-size:13px;font-weight:700}
+    .rm-l{font-size:9px;color:var(--muted)}
+
+    /* ── EXERCISE GRID ── */
+    .ex-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+    .ec{background:white;border-radius:var(--r);padding:18px;box-shadow:var(--shadow);transition:all .2s;cursor:pointer}
+    .ec:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+    .ec-icon{font-size:34px;margin-bottom:10px}
+    .ec-name{font-weight:700;font-size:15px;margin-bottom:5px}
+    .ec-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+
+    /* ── MODAL ── */
+    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;backdrop-filter:blur(4px);padding:20px;overflow-y:auto;align-items:flex-start;justify-content:center}
+    .overlay.open{display:flex}
+    .modal{background:white;border-radius:var(--r);max-width:540px;width:100%;margin:auto;overflow:hidden;animation:mIn .3s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes mIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+    .m-head{height:110px;display:flex;align-items:center;justify-content:center;font-size:66px}
+    .m-body{padding:22px}
+    .m-title{font-size:20px;font-weight:800;margin-bottom:6px}
+    .m-sec{margin-top:14px}
+    .m-sec-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+    .ing-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:5px}
+    .ing-list li{font-size:12px;padding:6px 9px;background:var(--bg);border-radius:7px;display:flex;align-items:center;gap:5px}
+    .step-list{counter-reset:s;list-style:none}
+    .step-list li{counter-increment:s;font-size:12px;padding:7px 0 7px 32px;border-bottom:1px solid #F3F4F6;position:relative;line-height:1.5}
+    .step-list li::before{content:counter(s);position:absolute;left:0;top:7px;width:22px;height:22px;background:var(--pink-light);color:var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+    .m-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid #F3F4F6}
+    .btn{padding:10px 22px;border-radius:99px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+    .btn-primary{background:linear-gradient(135deg,var(--pink),var(--lavender));color:white}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(255,107,157,.4)}
+    .btn-ghost{background:#F3F4F6;color:var(--muted)}
+    .btn-ghost:hover{background:#E5E7EB}
+    .btn-sm{padding:6px 14px;font-size:11px}
+    .close-x{width:30px;height:30px;border-radius:50%;border:none;background:#F3F4F6;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+    .close-x:hover{background:#E5E7EB}
+
+    /* ── WORKOUT MODAL ── */
+    .wk-ex-list{list-style:none}
+    .wk-ex-item{padding:10px;border-radius:var(--rs);margin-bottom:7px;background:var(--bg);display:flex;gap:10px;align-items:center}
+    .wk-ex-item.cur{background:var(--pink-light);border:2px solid var(--pink)}
+    .wk-ex-num{width:26px;height:26px;border-radius:50%;background:var(--pink-light);color:var(--pink);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+    .wk-ex-item.cur .wk-ex-num{background:var(--pink);color:white}
+    .wk-ex-info{flex:1}
+    .wk-ex-name{font-weight:600;font-size:13px}
+    .wk-ex-reps{font-size:11px;color:var(--muted)}
+    .timer{font-size:56px;font-weight:800;text-align:center;color:var(--pink);font-variant-numeric:tabular-nums;margin:14px 0;letter-spacing:-2px}
+
+    /* ── PROGRESS ── */
+    .wk-week{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:14px 0}
+    .day-c{text-align:center}
+    .day-n{font-size:10px;color:var(--muted);margin-bottom:5px}
+    .day-r{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;border:2.5px solid #E5E7EB}
+    .day-r.done{border-color:var(--green);background:var(--green-light)}
+    .day-r.today{border-color:var(--pink);background:var(--pink-light);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+    /* ── BMI / CALCULATOR ── */
+    .bmi-form{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:16px}
+    .fg{display:flex;flex-direction:column;gap:5px}
+    .fl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+    .fi{padding:9px 12px;border:2px solid #E5E7EB;border-radius:var(--rs);font-size:14px;transition:border-color .2s;outline:none}
+    .fi:focus{border-color:var(--pink)}
+    .fi select{width:100%}
+    .bmi-result{padding:18px;border-radius:var(--rs);text-align:center;margin-top:14px}
+    .bmi-num{font-size:46px;font-weight:800;line-height:1}
+    .bmi-cat{font-size:15px;font-weight:600;margin-top:6px}
+    .cal-goal{margin-top:14px;padding:14px;background:var(--pink-light);border-radius:var(--rs);text-align:center}
+    .cal-goal-num{font-size:30px;font-weight:800;color:var(--pink)}
+    .cal-goal-lbl{font-size:12px;color:var(--muted);margin-top:3px}
+
+    /* ── TIP CARD ── */
+    .tip{background:linear-gradient(135deg,var(--yellow-light),var(--mint-light));border-radius:var(--r);padding:18px;margin-bottom:22px;display:flex;align-items:flex-start;gap:14px}
+    .tip-icon{font-size:30px;flex-shrink:0}
+    .tip-title{font-weight:700;font-size:13px;margin-bottom:3px}
+    .tip-txt{font-size:12px;color:var(--muted);line-height:1.6}
+
+    /* ── STREAK ROW ── */
+    .streak-row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+    .sdot{width:28px;height:28px;border-radius:50%;background:#F3F4F6;display:flex;align-items:center;justify-content:center;font-size:12px}
+    .sdot.done{background:linear-gradient(135deg,var(--pink),var(--lavender));color:white}
+    .sdot.today{background:var(--yellow);animation:pulse 2s infinite}
+
+    /* ── CONFETTI ── */
+    .confetti{position:fixed;pointer-events:none;z-index:9999;border-radius:2px;animation:cf 3s ease-in forwards}
+    @keyframes cf{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){.mg{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.h2o-grid{grid-template-columns:repeat(4,1fr)}.bmi-form{grid-template-columns:1fr}.header{padding:16px}}
+    @media(max-width:420px){.recipe-grid,.ex-grid{grid-template-columns:1fr}}
+
+    /* ── SECTION TITLE ── */
+    .sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .sec-title{font-size:19px;font-weight:800}
+    .sec-sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+    /* ── FUN DETAILS ── */
+    .hearts{position:fixed;pointer-events:none;font-size:16px;opacity:.12;z-index:0;animation:flt 7s ease-in-out infinite}
+    @keyframes flt{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(8deg)}}
+    .sel{border:none;outline:none;background:transparent;font-size:inherit;font-family:inherit;cursor:pointer;color:var(--pink);font-weight:600}
+    .note{font-size:11px;color:var(--muted);font-style:italic;margin-top:6px}
+  </style>
+</head>
+<body>
+
+<!-- floating decorations -->
+<div class="hearts" style="top:20%;left:3%;animation-delay:0s">🌸</div>
+<div class="hearts" style="top:60%;right:3%;animation-delay:2s">✨</div>
+<div class="hearts" style="top:80%;left:6%;animation-delay:4s">🌿</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hc">
+    <div>
+      <div class="app-name">✨ Glow Up Journey</div>
+      <div class="app-sub">Your daily wellness companion 🌸</div>
+    </div>
+    <div class="h-right">
+      <div class="greeting" id="greeting">Good morning!</div>
+      <div class="h-date" id="hdate"></div>
+    </div>
+  </div>
+  <div class="quote-bar" id="quotebar"></div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="switchTab('dashboard',this)">🏠 Dashboard</button>
+  <button class="nav-btn" onclick="switchTab('recipes',this)">🥗 Recipes</button>
+  <button class="nav-btn" onclick="switchTab('workouts',this)">💪 Workouts</button>
+  <button class="nav-btn" onclick="switchTab('progress',this)">📈 Progress</button>
+  <button class="nav-btn" onclick="switchTab('calc',this)">🧮 Calculator</button>
+</nav>
+
+<div class="wrap">
+
+<!-- ════════ DASHBOARD ════════ -->
+<div class="sec active" id="sec-dashboard">
+
+  <!-- STATS ROW -->
+  <div class="stats">
+    <div class="sc">
+      <div class="sc-icon">🔥</div>
+      <div class="sc-val" id="stat-cal">0</div>
+      <div class="sc-lbl">of <span id="cal-goal-txt">1500</span> kcal eaten</div>
+      <div class="bar"><div class="bar-fill" id="bar-cal" style="width:0%;background:linear-gradient(90deg,var(--pink),var(--coral))"></div></div>
+    </div>
+    <div class="sc">
+      <div class="sc-icon">💧</div>
+      <div class="sc-val" id="stat-water">0</div>
+      <div class="sc-lbl">of 8 glasses today</div>
+      <div class="bar"><div class="bar-fill" id="bar-water" style="width:0%;background:linear-gradient(90deg,#60A5FA,var(--mint))"></div></div>
+    </div>
+    <div class="sc">
+      <div class="sc-icon">🏃</div>
+      <div class="sc-val" id="stat-workout">0</div>
+      <div class="sc-lbl">workouts this week</div>
+      <div class="bar"><div class="bar-fill" id="bar-workout" style="width:0%;background:linear-gradient(90deg,var(--green),var(--mint))"></div></div>
+    </div>
+    <div class="sc">
+      <div class="sc-icon">⚡</div>
+      <div class="sc-val" id="stat-streak">0</div>
+      <div class="sc-lbl">day streak 🌟</div>
+      <div class="bar"><div class="bar-fill" id="bar-streak" style="width:0%;background:linear-gradient(90deg,var(--yellow),var(--coral))"></div></div>
+    </div>
+  </div>
+
+  <!-- TIP OF THE DAY -->
+  <div class="tip" id="tip-box">
+    <div class="tip-icon">💡</div>
+    <div><div class="tip-title">Tip of the Day</div><div class="tip-txt" id="tip-txt">Loading your daily tip...</div></div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="mg">
+    <!-- LEFT: Meal Plan -->
+    <div>
+      <div class="card">
+        <div class="ch">
+          <div class="ct">🍽️ Today's Meal Plan</div>
+          <button class="btn btn-ghost btn-sm" onclick="shuffleMeals()">🔀 Shuffle</button>
+        </div>
+        <!-- Calorie ring summary -->
+        <div class="cal-sum">
+          <div class="ring-wrap">
+            <svg class="ring-svg" viewBox="0 0 76 76">
+              <circle cx="38" cy="38" r="30" fill="none" stroke="#F3F4F6" stroke-width="7"/>
+              <circle cx="38" cy="38" r="30" fill="none" stroke="url(#rg)" stroke-width="7" stroke-linecap="round" stroke-dasharray="188.5" id="ring-dash" stroke-dashoffset="188.5"/>
+              <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FF6B9D"/><stop offset="100%" stop-color="#A78BFA"/></linearGradient></defs>
+            </svg>
+            <div class="ring-txt"><div class="ring-num" id="ring-num">0</div><div class="ring-lbl">kcal</div></div>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:12px;font-weight:700;margin-bottom:8px">Today's Macros</div>
+            <div class="macro-r"><span class="ml">Protein</span><div class="mb"><div class="mbf" id="mb-p" style="width:0%;background:var(--pink)"></div></div><span class="mv" id="mv-p">0g</span></div>
+            <div class="macro-r"><span class="ml">Carbs</span><div class="mb"><div class="mbf" id="mb-c" style="width:0%;background:var(--blue)"></div></div><span class="mv" id="mv-c">0g</span></div>
+            <div class="macro-r"><span class="ml">Fat</span><div class="mb"><div class="mbf" id="mb-f" style="width:0%;background:var(--yellow)"></div></div><span class="mv" id="mv-f">0g</span></div>
+          </div>
+        </div>
+        <!-- Calories remaining pill -->
+        <div id="cal-remaining-bar" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:8px 14px;border-radius:99px;background:var(--bg);font-size:12px">
+          <span>🎯 <span id="cal-remaining-txt" style="font-weight:700;color:var(--pink)">1500 kcal</span> remaining today</span>
+          <span id="cal-logged-count" style="color:var(--muted)">0 / 4 logged</span>
+        </div>
+        <!-- Meals -->
+        <div id="meal-list"></div>
+        <p class="note">Tap a meal to log it ✓ or view recipe details</p>
+      </div>
+
+      <!-- Hydration Card -->
+      <div class="card" style="margin-top:16px">
+        <div class="ch">
+          <div class="ct">💧 Hydration Tracker</div>
+          <button class="btn btn-ghost btn-sm" onclick="resetWater()">Reset</button>
+        </div>
+        <div class="h2o-grid" id="h2o-grid"></div>
+        <div class="h2o-info">
+          <span id="h2o-msg">Keep sipping! 💙</span>
+          <span class="h2o-count" id="h2o-count">0 / 8 glasses</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Weather + Workout -->
+    <div>
+      <!-- Weather Widget -->
+      <div class="wx" id="wx-card">
+        <div class="wx-loading" id="wx-loading">
+          <div class="spinner"></div>
+          <div style="font-size:13px">Detecting location...</div>
+        </div>
+        <div id="wx-content" style="display:none">
+          <div class="wx-main">
+            <div class="wx-icon" id="wx-icon">☀️</div>
+            <div>
+              <div class="wx-temp" id="wx-temp">--°C</div>
+              <div class="wx-desc" id="wx-desc">Clear Sky</div>
+              <div class="wx-city" id="wx-city">📍 Loading...</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;font-size:12px;opacity:.8;margin-bottom:10px">
+            <span>💧 <span id="wx-humid">--%</span> humidity</span>
+            <span>💨 <span id="wx-wind">-- km/h</span> wind</span>
+            <span>👁️ <span id="wx-feels">--°C</span> feels like</span>
+          </div>
+          <div class="outfit">
+            <div class="outfit-title">👗 Today's Outfit Vibe</div>
+            <div class="outfit-tags" id="outfit-tags"></div>
+          </div>
+        </div>
+        <div id="wx-err" style="display:none;text-align:center;padding:20px;opacity:.8;font-size:13px">
+          📍 Enable location for weather & outfit ideas!<br>
+          <button class="btn btn-ghost btn-sm" style="margin-top:10px;background:rgba(255,255,255,.2);color:white" onclick="initWeather()">Try Again</button>
+        </div>
+      </div>
+
+      <!-- Today's Workout -->
+      <div class="card">
+        <div class="ch">
+          <div class="ct">🏋️ Today's Workout</div>
+          <button class="btn btn-ghost btn-sm" onclick="shuffleWorkout()">🔀</button>
+        </div>
+        <div id="today-workout"></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /dashboard -->
+
+<!-- ════════ RECIPES ════════ -->
+<div class="sec" id="sec-recipes">
+  <div class="sec-h">
+    <div><div class="sec-title">🥗 Recipe Book</div><div class="sec-sub">Delicious calorie-deficit meals ✨</div></div>
+  </div>
+  <div class="tabs" id="recipe-tabs">
+    <button class="tab active" onclick="switchRecipeTab('breakfast',this)">🌅 Breakfast</button>
+    <button class="tab" onclick="switchRecipeTab('lunch',this)">☀️ Lunch</button>
+    <button class="tab" onclick="switchRecipeTab('dinner',this)">🌙 Dinner</button>
+    <button class="tab" onclick="switchRecipeTab('snacks',this)">🍎 Snacks</button>
+  </div>
+  <div class="recipe-grid" id="recipe-grid"></div>
+</div>
+
+<!-- ════════ WORKOUTS ════════ -->
+<div class="sec" id="sec-workouts">
+  <div class="sec-h">
+    <div><div class="sec-title">💪 Workout Library</div><div class="sec-sub">Home workouts, no equipment needed!</div></div>
+  </div>
+  <div class="tabs" id="wk-tabs">
+    <button class="tab active" onclick="switchWkTab('all',this)">🌟 All</button>
+    <button class="tab" onclick="switchWkTab('hiit',this)">🔥 HIIT</button>
+    <button class="tab" onclick="switchWkTab('strength',this)">💪 Strength</button>
+    <button class="tab" onclick="switchWkTab('yoga',this)">🧘 Yoga</button>
+    <button class="tab" onclick="switchWkTab('cardio',this)">💃 Cardio</button>
+  </div>
+  <div class="ex-grid" id="wk-grid"></div>
+</div>
+
+<!-- ════════ PROGRESS ════════ -->
+<div class="sec" id="sec-progress">
+  <div class="sec-h">
+    <div><div class="sec-title">📈 My Progress</div><div class="sec-sub">You're doing amazing! Keep going 🌟</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+    <!-- Weekly overview -->
+    <div class="card">
+      <div class="ch"><div class="ct">📅 This Week</div></div>
+      <div class="wk-week" id="week-view"></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px" id="week-msg"></div>
+    </div>
+    <!-- Streak -->
+    <div class="card">
+      <div class="ch"><div class="ct">🔥 Streak</div></div>
+      <div style="font-size:36px;font-weight:800;color:var(--pink)" id="streak-big">0</div>
+      <div style="font-size:13px;color:var(--muted)">consecutive days</div>
+      <div class="streak-row" id="streak-dots"></div>
+    </div>
+    <!-- Water log -->
+    <div class="card">
+      <div class="ch"><div class="ct">💧 Water Log</div></div>
+      <div style="font-size:36px;font-weight:800;color:#60A5FA" id="water-today-big">0</div>
+      <div style="font-size:13px;color:var(--muted)">glasses today (goal: 8)</div>
+      <div class="bar" style="margin-top:12px"><div class="bar-fill" id="water-prog-bar" style="width:0%;background:linear-gradient(90deg,#60A5FA,var(--mint))"></div></div>
+    </div>
+    <!-- Calories -->
+    <div class="card">
+      <div class="ch"><div class="ct">🔥 Calories Today</div></div>
+      <div style="font-size:36px;font-weight:800;color:var(--pink)" id="cal-big">0</div>
+      <div style="font-size:13px;color:var(--muted)">of <span id="cal-goal-prog">1500</span> kcal goal</div>
+      <div class="bar" style="margin-top:12px"><div class="bar-fill" id="cal-prog-bar" style="width:0%;background:linear-gradient(90deg,var(--pink),var(--coral))"></div></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="ch"><div class="ct">📝 Daily Log</div><button class="btn btn-ghost btn-sm" onclick="clearLog()">Clear</button></div>
+    <div id="daily-log" style="font-size:13px;color:var(--muted);min-height:60px">Your logged meals and workouts will appear here 🌸</div>
+  </div>
+</div>
+
+<!-- ════════ CALCULATOR ════════ -->
+<div class="sec" id="sec-calc">
+  <div class="sec-h">
+    <div><div class="sec-title">🧮 Health Calculator</div><div class="sec-sub">BMI + Calorie Goal Calculator</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px">
+    <div class="card">
+      <div class="ch"><div class="ct">📏 BMI Calculator</div></div>
+      <div class="bmi-form">
+        <div class="fg"><label class="fl">Height (cm)</label><input class="fi" type="number" id="inp-height" placeholder="e.g. 165" min="100" max="250"></div>
+        <div class="fg"><label class="fl">Weight (kg)</label><input class="fi" type="number" id="inp-weight" placeholder="e.g. 65" min="30" max="250"></div>
+        <div class="fg"><label class="fl">Age</label><input class="fi" type="number" id="inp-age" placeholder="e.g. 25" min="10" max="100"></div>
+        <div class="fg"><label class="fl">Gender</label>
+          <select class="fi" id="inp-gender">
+            <option value="female">Female 👩</option>
+            <option value="male">Male 👨</option>
+          </select>
+        </div>
+        <div class="fg" style="grid-column:span 2"><label class="fl">Activity Level</label>
+          <select class="fi" id="inp-activity">
+            <option value="1.2">Sedentary (little/no exercise)</option>
+            <option value="1.375">Lightly active (1-3 days/week)</option>
+            <option value="1.55" selected>Moderately active (3-5 days)</option>
+            <option value="1.725">Very active (6-7 days)</option>
+            <option value="1.9">Extra active (2x/day)</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Goal</label>
+          <select class="fi" id="inp-goal">
+            <option value="500">Lose weight (-500 kcal)</option>
+            <option value="250">Lose slowly (-250 kcal)</option>
+            <option value="0">Maintain weight</option>
+            <option value="-250">Lean gain (+250 kcal)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="calcBMI()">✨ Calculate</button>
+      <div id="bmi-result" style="display:none">
+        <div class="bmi-result" id="bmi-result-box">
+          <div class="bmi-num" id="bmi-val">--</div>
+          <div class="bmi-cat" id="bmi-cat">--</div>
+        </div>
+        <div class="cal-goal" id="cal-goal-box">
+          <div class="cal-goal-num" id="cal-goal-val">--</div>
+          <div class="cal-goal-lbl">Daily Calorie Goal for your target 🎯</div>
+          <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="applyCalGoal()">Apply as my goal ✓</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="ct">💡 What does this mean?</div></div>
+      <div style="font-size:13px;line-height:1.8;color:var(--muted)">
+        <p style="margin-bottom:8px"><strong style="color:var(--text)">BMI Ranges:</strong></p>
+        <div style="display:grid;gap:6px">
+          <div style="padding:8px 12px;border-radius:8px;background:#DBEAFE;font-size:12px">Under 18.5 — <strong>Underweight</strong> 🥺</div>
+          <div style="padding:8px 12px;border-radius:8px;background:var(--green-light);font-size:12px">18.5 – 24.9 — <strong>Healthy weight</strong> 🌟</div>
+          <div style="padding:8px 12px;border-radius:8px;background:var(--yellow-light);font-size:12px">25 – 29.9 — <strong>Overweight</strong> ⚡</div>
+          <div style="padding:8px 12px;border-radius:8px;background:var(--coral-light);font-size:12px">30+ — <strong>Obese</strong> 💙 (you've got this!)</div>
+        </div>
+        <p style="margin-top:16px;font-size:12px">Remember: BMI is just one indicator. Muscle mass, bone density, and overall health matter more. Be kind to yourself! 🌸</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- ════════ RECIPE MODAL ════════ -->
+<div class="overlay" id="recipe-modal" onclick="closeModal('recipe-modal',event)">
+  <div class="modal">
+    <div class="m-head" id="rm-head" style="background:linear-gradient(135deg,var(--pink-light),var(--lavender-light))">🥗</div>
+    <div class="m-body">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div>
+          <div class="m-title" id="rm-name">Recipe</div>
+          <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap" id="rm-badges"></div>
+          <div id="rm-source" style="font-size:11px;color:var(--muted);margin-top:5px;display:none"></div>
+        </div>
+        <button class="close-x" onclick="closeModalById('recipe-modal')">✕</button>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Nutrition per serving</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="rm-nutrition"></div>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">🛒 Ingredients</div>
+        <ul class="ing-list" id="rm-ingredients"></ul>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">👩‍🍳 Instructions</div>
+        <ol class="step-list" id="rm-steps"></ol>
+      </div>
+      <div class="m-footer">
+        <button class="btn btn-ghost" onclick="closeModalById('recipe-modal')">Close</button>
+        <button class="btn btn-primary" id="rm-log-btn">✓ Log this meal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ WORKOUT MODAL ════════ -->
+<div class="overlay" id="workout-modal" onclick="closeModal('workout-modal',event)">
+  <div class="modal">
+    <div class="m-head" id="wm-head" style="background:linear-gradient(135deg,var(--coral-light),var(--yellow-light))">💪</div>
+    <div class="m-body">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div>
+          <div class="m-title" id="wm-name">Workout</div>
+          <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap" id="wm-badges"></div>
+        </div>
+        <button class="close-x" onclick="closeModalById('workout-modal')">✕</button>
+      </div>
+      <div class="timer" id="wm-timer" style="display:none">00:00</div>
+      <div class="m-sec">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="m-sec-title" style="margin-bottom:0">Exercises</div>
+          <div style="display:flex;gap:7px">
+            <button class="btn btn-ghost btn-sm" id="wm-start-btn" onclick="startTimer()">▶ Start</button>
+            <button class="btn btn-ghost btn-sm" id="wm-stop-btn" onclick="stopTimer()" style="display:none">■ Stop</button>
+          </div>
+        </div>
+        <ul class="wk-ex-list" id="wm-exercises"></ul>
+      </div>
+      <div class="m-footer">
+        <button class="btn btn-ghost" onclick="closeModalById('workout-modal')">Close</button>
+        <button class="btn btn-primary" onclick="logWorkout()">✓ Log Workout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════════════════════════
+const QUOTES = [
+  "You didn't come this far to only come this far. 🌟",
+  "Every healthy choice is an act of self-love. 💕",
+  "Progress, not perfection. One day at a time. ✨",
+  "Your body hears everything your mind says. Stay positive! 🌸",
+  "Small steps every day lead to big changes. Keep going! 🦋",
+  "Nourish to flourish. Feed your body, fuel your soul. 🌿",
+  "Be the energy you want to attract today. 💫",
+  "Glow differently because you're taking care of yourself. ✨"
+];
+
+const TIPS = [
+  { icon:"🥤", title:"Drink water before meals", text:"Drinking a glass of water 20-30 minutes before eating can reduce calorie intake by up to 13% and improve metabolism." },
+  { icon:"🥦", title:"Eat protein at every meal", text:"Protein keeps you full longer and burns more calories during digestion. Aim for 25-30g per meal for best results." },
+  { icon:"🌙", title:"Sleep 7-9 hours", text:"Poor sleep increases hunger hormones (ghrelin) by 28%. Quality sleep is as important as diet and exercise." },
+  { icon:"🚶", title:"Move after meals", text:"A 10-15 minute walk after eating can lower blood sugar by 22% and improve digestion and metabolism." },
+  { icon:"🍽️", title:"Use smaller plates", text:"Switching to a 10-inch plate from a 12-inch plate can reduce calorie intake by 22% without feeling deprived!" },
+  { icon:"🧘", title:"Manage stress", text:"Cortisol (stress hormone) triggers fat storage especially around the belly. Even 5 minutes of deep breathing helps." },
+  { icon:"🌅", title:"Eat breakfast within 1 hour", text:"Eating within 1 hour of waking jumpstarts your metabolism and reduces binge eating later in the day." },
+  { icon:"🎨", title:"Eat the rainbow", text:"Different colored fruits and veggies contain different nutrients. Aim for 5+ colors per day for maximum nutrition." }
+];
+
+const RECIPES = {
+  breakfast: [
+    { name:"Cottage Cheese Protein Pancake Bowl", emoji:"🥞", cal:338, p:31, c:32, f:9, time:"25 min", level:"Easy", color:"#FFE0EE", viral:true, source:"@balancewithnu · TikTok",
+      ingredients:["150g fat-free cottage cheese","1 large egg","60g self-raising flour","15g vanilla protein powder","25ml almond milk","½ tsp cinnamon","1 tsp honey","Fresh strawberries & blueberries"],
+      steps:["Blend cottage cheese, egg and milk until completely smooth.","Stir in flour, protein powder and cinnamon — don't over-mix.","Pour into a ramekin or small baking dish.","Bake at 180°C / 350°F for 20-25 min until set and golden.","Top with fresh berries and a drizzle of honey. This went VIRAL for a reason! 🍓"] },
+    { name:"Greek Yogurt Berry Parfait", emoji:"🫐", cal:280, p:20, c:35, f:5, time:"5 min", level:"Easy", color:"#F3E8FF",
+      ingredients:["1 cup Greek yogurt (0%)","½ cup mixed berries","¼ cup granola (low-sugar)","1 tbsp honey","1 tsp chia seeds","Fresh mint"],
+      steps:["Spoon Greek yogurt into a bowl or glass.","Layer half the berries over the yogurt.","Add granola for crunch.","Top with remaining berries, drizzle honey.","Sprinkle chia seeds and add mint."] },
+    { name:"Avocado Toast & Poached Egg", emoji:"🥑", cal:320, p:15, c:28, f:18, time:"10 min", level:"Easy", color:"#E0F9F7",
+      ingredients:["2 slices whole grain bread","½ ripe avocado","2 eggs","Lemon juice","Red pepper flakes","Salt & pepper","Cherry tomatoes"],
+      steps:["Toast bread until golden and crisp.","Mash avocado with lemon juice, salt and pepper.","Poach eggs in simmering water with a splash of vinegar for 3 min.","Spread avocado on toast, top with poached egg.","Add cherry tomatoes, red pepper flakes and enjoy! 🌶️"] },
+    { name:"Overnight Oats", emoji:"🌾", cal:340, p:12, c:55, f:8, time:"5 min + overnight", level:"Easy", color:"#FFFAEB",
+      ingredients:["½ cup rolled oats","¾ cup almond milk","½ cup Greek yogurt","1 tbsp chia seeds","1 tsp vanilla extract","1 tbsp maple syrup","Toppings: berries, nuts"],
+      steps:["Mix oats, milk, yogurt, chia seeds, vanilla and maple syrup.","Stir well in a mason jar.","Refrigerate overnight (at least 6 hours).","In the morning, stir and top with berries and nuts.","Can be stored up to 3 days in fridge! 🫙"] },
+    { name:"Veggie Egg Scramble", emoji:"🍳", cal:250, p:18, c:8, f:16, time:"10 min", level:"Easy", color:"#E8F9EA",
+      ingredients:["3 eggs","¼ cup spinach","½ bell pepper (diced)","¼ onion (diced)","5 cherry tomatoes","1 tsp olive oil","Salt, pepper, herbs"],
+      steps:["Heat olive oil in a non-stick pan over medium heat.","Sauté onion and bell pepper for 2-3 min.","Add spinach, cook until wilted.","Whisk eggs with salt and pepper, pour in.","Gently fold and scramble, add tomatoes, serve hot. 🍅"] },
+    { name:"Banana Protein Smoothie Bowl", emoji:"🍌", cal:290, p:18, c:42, f:6, time:"7 min", level:"Easy", color:"#DBEAFE",
+      ingredients:["2 frozen bananas","½ cup almond milk","1 scoop vanilla protein powder","½ cup frozen mango","Toppings: granola, berries, coconut flakes, chia seeds"],
+      steps:["Blend frozen bananas, mango, protein powder and almond milk until very thick.","Pour into a bowl — thick enough to hold toppings.","Arrange granola, berries, coconut flakes in rows for the aesthetic look 🎨.","Eat immediately while cold and creamy!"] }
+  ],
+  lunch: [
+    { name:"Viral Green Goddess Salad", emoji:"🥬", cal:180, p:8, c:14, f:11, time:"10 min", level:"Easy", color:"#E8F9EA", viral:true, source:"@bakedbymeli · 20M+ views",
+      ingredients:["½ head green cabbage (finely shredded)","2 cups baby spinach","½ cup fresh basil","½ cup flat-leaf parsley","3 tbsp olive oil","2 tbsp lemon juice","1 clove garlic","2 tbsp Greek yogurt","Salt & pepper","Parmesan crisps for dipping"],
+      steps:["Blend basil, parsley, olive oil, lemon, garlic and yogurt until a vivid green dressing forms.","Shred cabbage as finely as possible — the finer, the better.","Toss cabbage and spinach with ALL the dressing.","Serve immediately with parmesan crisps for dipping, TikTok style! 💚","Pro tip: double the dressing — it's incredible on everything."] },
+    { name:"Korean Beef Rice Bowl", emoji:"🍚", cal:390, p:32, c:40, f:10, time:"20 min", level:"Easy", color:"#FFE0EE", viral:true, source:"Trending on TikTok & Instagram",
+      ingredients:["150g lean ground beef","¾ cup cooked brown rice","2 tbsp low-sodium soy sauce","1 tbsp sesame oil","1 tsp gochujang (or sriracha)","3 garlic cloves (minced)","1 tsp fresh ginger","1 tbsp honey","Cucumber, shredded carrots","Spring onions, sesame seeds"],
+      steps:["Cook brown rice. Heat sesame oil in pan.","Brown ground beef, breaking it apart well.","Add garlic and ginger, cook 30 seconds until fragrant.","Mix soy sauce, gochujang and honey — pour over beef, toss.","Serve beef over rice, top with cucumber, carrots, spring onions and sesame seeds. 🥢"] },
+    { name:"Quinoa Buddha Bowl", emoji:"🌿", cal:380, p:15, c:58, f:10, time:"25 min", level:"Medium", color:"#E0F9F7",
+      ingredients:["½ cup dry quinoa","1 cup chickpeas (canned)","1 cup spinach","½ avocado","½ cup roasted sweet potato","Lemon tahini dressing","Cherry tomatoes, cucumber"],
+      steps:["Cook quinoa as per package instructions.","Roast sweet potato at 200°C for 20 min.","Rinse and pat dry chickpeas, season and roast 15 min.","Assemble bowl: quinoa base, then all toppings.","Drizzle with tahini dressing and serve."] },
+    { name:"Grilled Chicken Salad", emoji:"🥗", cal:320, p:35, c:15, f:12, time:"20 min", level:"Easy", color:"#FFFAEB",
+      ingredients:["150g chicken breast","2 cups mixed greens","½ cup cherry tomatoes","¼ cucumber (sliced)","2 tbsp balsamic vinaigrette","Salt, pepper, herbs","Optional: feta crumbles"],
+      steps:["Season chicken with salt, pepper, garlic powder.","Grill or pan-sear 6-7 min each side until cooked through.","Let rest 5 min, then slice diagonally.","Toss greens with dressing in a bowl.","Top with sliced chicken, tomatoes, cucumber. 🌿"] },
+    { name:"Lentil Vegetable Soup", emoji:"🫕", cal:280, p:16, c:42, f:4, time:"35 min", level:"Easy", color:"#DBEAFE",
+      ingredients:["1 cup red lentils","2 carrots (diced)","2 celery stalks (diced)","1 can diced tomatoes","1 onion","3 cloves garlic","1 tsp cumin, turmeric","4 cups vegetable broth"],
+      steps:["Sauté onion and garlic in a pot for 3 min.","Add carrots and celery, cook 3 min more.","Add lentils, tomatoes, broth and spices.","Simmer 20-25 min until lentils are soft.","Season, add a squeeze of lemon to serve. 🍋"] },
+    { name:"Turkey Lettuce Wraps", emoji:"🥬", cal:260, p:30, c:12, f:8, time:"15 min", level:"Easy", color:"#F3E8FF",
+      ingredients:["200g lean ground turkey","Butter lettuce leaves","1 tbsp low-sodium soy sauce","1 tbsp hoisin sauce","½ cup water chestnuts","2 green onions","1 tsp sesame oil","Garlic, ginger"],
+      steps:["Cook turkey in pan until no longer pink.","Add garlic, ginger, cook 1 min.","Mix in soy sauce, hoisin, sesame oil.","Add water chestnuts and green onions.","Serve in lettuce cups as wraps! 🥬"] }
+  ],
+  dinner: [
+    { name:"Emily Mariko's Salmon Rice Bowl", emoji:"🍣", cal:420, p:38, c:42, f:12, time:"15 min", level:"Easy", color:"#E0F9F7", viral:true, source:"@emilymariko · 70M+ views TikTok",
+      ingredients:["150g salmon fillet (or leftover)","¾ cup cooked jasmine rice","1 tbsp soy sauce","1 tbsp Kewpie mayo","1 tsp sriracha","½ avocado (sliced)","Cucumber (sliced)","Sesame seeds","Furikake seasoning","1 ice cube (the hack! 🧊)"],
+      steps:["Cook salmon: season with salt, bake at 200°C for 12 min, or use leftovers.","Place rice in a bowl, lay salmon on top.","The Emily Mariko hack: place an ice cube on salmon, cover with parchment and microwave 2 min.","Flake salmon over rice with soy sauce and mix.","Top with Kewpie mayo, sriracha, avocado, cucumber, sesame seeds & furikake. 🍣"] },
+    { name:"Cottage Cheese Beef Bowl", emoji:"🫙", cal:450, p:42, c:35, f:14, time:"30 min", level:"Easy", color:"#FFE0EE", viral:true, source:"@eatingbirdfood · Viral TikTok",
+      ingredients:["150g lean ground beef","1 medium sweet potato (cubed)","½ cup cottage cheese","½ avocado","1 tsp taco seasoning","1 tsp hot honey","Spring onions, lime wedge","Cilantro (optional)"],
+      steps:["Roast sweet potato cubes at 200°C for 20 min with olive oil and seasoning.","Brown ground beef in a pan, add taco seasoning and a splash of water.","Scoop cottage cheese as the creamy base of your bowl.","Layer on sweet potato, seasoned beef, and sliced avocado.","Drizzle with hot honey, squeeze lime, top with spring onions. Absolutely viral! 🔥"] },
+    { name:"Teriyaki Salmon Bowl", emoji:"🐟", cal:380, p:40, c:32, f:10, time:"25 min", level:"Easy", color:"#E8F9EA", viral:true, source:"Trending Instagram & TikTok",
+      ingredients:["180g salmon fillet","¾ cup cooked jasmine rice","2 tbsp low-sodium soy sauce","1 tbsp honey","1 tsp sesame oil","1 tsp rice vinegar","1 tsp cornstarch","Steamed broccoli","Avocado, sesame seeds","Spring onions"],
+      steps:["Mix soy sauce, honey, sesame oil, vinegar and cornstarch for teriyaki glaze.","Pan-fry salmon 3 min each side, pour teriyaki glaze over, cook 2 more min.","Steam broccoli until tender-crisp.","Build bowl: rice, teriyaki salmon, broccoli, avocado.","Drizzle remaining glaze, top with spring onions and sesame seeds. ✨"] },
+    { name:"Chicken Veggie Stir Fry", emoji:"🥢", cal:380, p:35, c:30, f:10, time:"20 min", level:"Easy", color:"#FFFAEB",
+      ingredients:["150g chicken breast (sliced)","2 cups mixed veggies (broccoli, bell pepper, snap peas)","2 tbsp low-sodium soy sauce","1 tbsp oyster sauce","1 tsp sesame oil","Garlic, ginger","½ cup brown rice"],
+      steps:["Cook brown rice ahead of time.","Heat pan to high, add oil, cook chicken until golden.","Add garlic and ginger, cook 30 seconds.","Toss in veggies, stir fry 4-5 min.","Add sauces, toss to coat. Serve over rice."] },
+    { name:"Turkey Zoodle Bolognese", emoji:"🍝", cal:320, p:30, c:18, f:12, time:"30 min", level:"Medium", color:"#F3E8FF",
+      ingredients:["150g lean ground turkey","3 medium zucchinis (spiralized)","1 can crushed tomatoes","1 onion (diced)","3 cloves garlic","1 tsp Italian seasoning","Parmesan to garnish"],
+      steps:["Sauté onion and garlic until soft.","Brown ground turkey, season with Italian herbs.","Add crushed tomatoes, simmer 15 min.","Spiralize zucchinis into noodles.","Sauté zoodles 2 min, top with turkey sauce. 🌿"] },
+    { name:"Spiced Chickpea Bowl", emoji:"🫘", cal:350, p:16, c:52, f:8, time:"25 min", level:"Easy", color:"#DBEAFE",
+      ingredients:["1 can chickpeas (drained)","1 cup cooked brown rice","1 cup spinach","½ cup cherry tomatoes","1 tsp cumin, paprika, turmeric","1 tbsp olive oil","Tahini yogurt sauce"],
+      steps:["Toss chickpeas in olive oil and spices.","Roast at 200°C for 20 min until crispy.","Warm brown rice, place in bowl.","Add spinach, tomatoes, roasted chickpeas.","Drizzle with yogurt tahini sauce, serve! 🌟"] }
+  ],
+  snacks: [
+    { name:"Cottage Cheese 'Ice Cream'", emoji:"🍨", cal:120, p:18, c:10, f:1, time:"5 min + freeze", level:"Easy", color:"#FFE0EE", viral:true, source:"Viral TikTok trend 2025",
+      ingredients:["1 cup cottage cheese (full fat or low fat)","1 tbsp honey or maple syrup","½ tsp vanilla extract","¼ cup frozen berries","Optional: peanut butter swirl"],
+      steps:["Blend cottage cheese, honey and vanilla until completely silky smooth.","Fold in frozen berries (don't blend — keep the chunks!).","Pour into a container, freeze 2 hours for soft-serve consistency.","Scoop and serve! Tastes like actual ice cream but is packed with protein 🤯.","Optional: swirl in peanut butter before freezing for extra flavour."] },
+    { name:"Apple + Almond Butter", emoji:"🍎", cal:180, p:5, c:25, f:8, time:"2 min", level:"Easy", color:"#E8F9EA",
+      ingredients:["1 medium apple","2 tbsp natural almond butter","Optional: cinnamon sprinkle"],
+      steps:["Slice apple into wedges.","Serve with almond butter for dipping.","Sprinkle cinnamon for extra flavour! ✨"] },
+    { name:"Hummus & Veggie Sticks", emoji:"🥕", cal:140, p:6, c:18, f:5, time:"5 min", level:"Easy", color:"#FFFAEB",
+      ingredients:["3 tbsp hummus","Carrot sticks","Celery sticks","Cucumber sticks","Bell pepper strips","Cherry tomatoes"],
+      steps:["Wash and cut all vegetables into sticks.","Arrange around a bowl of hummus.","Dip and enjoy a satisfying crunch! 🥕"] },
+    { name:"Hard Boiled Eggs", emoji:"🥚", cal:140, p:12, c:1, f:10, time:"12 min", level:"Easy", color:"#DBEAFE",
+      ingredients:["2 large eggs","Pinch of salt","Paprika or everything bagel seasoning"],
+      steps:["Place eggs in cold water in saucepan.","Bring to boil, then cook 9-10 min.","Transfer to ice water bath immediately.","Peel, halve, season with paprika. So simple! 🥚"] },
+    { name:"Greek Yogurt Bark", emoji:"🍫", cal:145, p:14, c:15, f:3, time:"5 min + freeze 2h", level:"Easy", color:"#E0F9F7", viral:true, source:"Viral Instagram/TikTok",
+      ingredients:["1 cup Greek yogurt (0%)","1 tbsp honey","½ tsp vanilla","¼ cup mixed berries","1 tbsp dark chocolate chips","1 tbsp granola"],
+      steps:["Mix yogurt with honey and vanilla.","Spread onto a parchment-lined tray, about 1cm thick.","Scatter berries, chocolate chips and granola on top.","Freeze at least 2 hours until solid.","Break into pieces like bark and serve straight from freezer! 🌸"] },
+    { name:"Mixed Nuts & Dark Choc", emoji:"🥜", cal:170, p:5, c:8, f:14, time:"1 min", level:"Easy", color:"#F3E8FF",
+      ingredients:["¼ cup mixed nuts (almonds, walnuts, cashews)","2 squares dark chocolate (70%+)","Optional: dried cranberries"],
+      steps:["Portion into a small bowl.","Pair with dark chocolate squares.","A little treat that is actually nutritious! 🍫"] }
+  ]
+};
+
+const WORKOUTS = [
+  { name:"Morning HIIT Blast", emoji:"🔥", type:"hiit", duration:"20 min", cal:220, level:"Beginner",
+    desc:"High-intensity intervals to jumpstart your metabolism and burn fat fast.",
+    exercises:[
+      {name:"Jumping Jacks",reps:"40 reps",rest:"10s rest"},
+      {name:"High Knees",reps:"30s",rest:"10s rest"},
+      {name:"Burpees",reps:"10 reps",rest:"20s rest"},
+      {name:"Mountain Climbers",reps:"30s",rest:"10s rest"},
+      {name:"Jump Squats",reps:"15 reps",rest:"20s rest"},
+      {name:"Fast Feet",reps:"30s",rest:"10s rest"},
+      {name:"Rest — repeat 3x",reps:"60s rest","_break":true}
+    ]
+  },
+  { name:"Full Body Strength", emoji:"💪", type:"strength", duration:"30 min", cal:180, level:"Beginner",
+    desc:"Build lean muscle and boost metabolism with bodyweight strength training.",
+    exercises:[
+      {name:"Push-ups",reps:"3×12 reps",rest:"30s rest"},
+      {name:"Bodyweight Squats",reps:"3×20 reps",rest:"30s rest"},
+      {name:"Reverse Lunges",reps:"3×12 each leg",rest:"30s rest"},
+      {name:"Glute Bridges",reps:"3×20 reps",rest:"20s rest"},
+      {name:"Tricep Dips (chair)",reps:"3×12 reps",rest:"30s rest"},
+      {name:"Plank Hold",reps:"3×30s",rest:"20s rest"},
+      {name:"Superman Hold",reps:"3×15 reps",rest:"20s rest"}
+    ]
+  },
+  { name:"Gentle Morning Yoga", emoji:"🧘", type:"yoga", duration:"30 min", cal:120, level:"All levels",
+    desc:"Flow through relaxing poses to stretch, de-stress and set a positive tone.",
+    exercises:[
+      {name:"Cat-Cow Stretch",reps:"10 breaths",rest:"Flow"},
+      {name:"Downward Dog",reps:"5 breaths",rest:"Flow"},
+      {name:"Warrior I",reps:"5 breaths each side",rest:"Flow"},
+      {name:"Warrior II",reps:"5 breaths each side",rest:"Flow"},
+      {name:"Child's Pose",reps:"10 breaths",rest:"Rest"},
+      {name:"Seated Forward Fold",reps:"10 breaths",rest:"Flow"},
+      {name:"Supine Twist",reps:"8 breaths each side",rest:"Rest"},
+      {name:"Savasana",reps:"3 minutes",rest:"Rest ✨"}
+    ]
+  },
+  { name:"Cardio Dance Party", emoji:"💃", type:"cardio", duration:"25 min", cal:250, level:"Beginner",
+    desc:"Fun cardio dance moves to get your heart pumping! No dance experience needed.",
+    exercises:[
+      {name:"Side Step + Clap",reps:"2 minutes",rest:"Flow"},
+      {name:"Grapevine Steps",reps:"2 minutes",rest:"Flow"},
+      {name:"Cha-Cha Slide",reps:"2 minutes",rest:"Flow"},
+      {name:"Hip Circles",reps:"1 minute",rest:"Flow"},
+      {name:"Jump & Shimmy",reps:"1 minute",rest:"Rest 30s"},
+      {name:"Repeat circuit 4×",reps:"",rest:""}
+    ]
+  },
+  { name:"Core & Abs Sculpt", emoji:"⚡", type:"strength", duration:"20 min", cal:150, level:"Intermediate",
+    desc:"Targeted core work to sculpt your waist and strengthen your centre.",
+    exercises:[
+      {name:"Plank",reps:"3×45s",rest:"15s rest"},
+      {name:"Crunches",reps:"3×20 reps",rest:"15s rest"},
+      {name:"Bicycle Crunches",reps:"3×20 reps",rest:"15s rest"},
+      {name:"Leg Raises",reps:"3×15 reps",rest:"20s rest"},
+      {name:"Russian Twists",reps:"3×20 reps",rest:"15s rest"},
+      {name:"Side Plank",reps:"3×30s each side",rest:"15s rest"},
+      {name:"Dead Bug",reps:"3×10 reps",rest:"20s rest"}
+    ]
+  },
+  { name:"Booty & Legs Burn", emoji:"🍑", type:"strength", duration:"25 min", cal:190, level:"Beginner",
+    desc:"Sculpt and tone your lower body with these effective bodyweight exercises.",
+    exercises:[
+      {name:"Squats",reps:"4×20 reps",rest:"20s rest"},
+      {name:"Sumo Squats",reps:"3×20 reps",rest:"20s rest"},
+      {name:"Donkey Kicks",reps:"3×15 each side",rest:"15s rest"},
+      {name:"Side-Lying Leg Lifts",reps:"3×20 each side",rest:"15s rest"},
+      {name:"Glute Bridges",reps:"3×25 reps",rest:"15s rest"},
+      {name:"Wall Sit",reps:"3×45s",rest:"20s rest"},
+      {name:"Calf Raises",reps:"3×30 reps",rest:"15s rest"}
+    ]
+  },
+  { name:"Upper Body Tone", emoji:"🦾", type:"strength", duration:"25 min", cal:160, level:"Beginner",
+    desc:"Tone arms, shoulders, chest and back with no equipment needed.",
+    exercises:[
+      {name:"Push-ups (standard)",reps:"4×10 reps",rest:"20s rest"},
+      {name:"Wide Push-ups",reps:"3×10 reps",rest:"20s rest"},
+      {name:"Tricep Push-ups",reps:"3×10 reps",rest:"20s rest"},
+      {name:"Arm Circles",reps:"2×30s each dir",rest:"10s rest"},
+      {name:"Wall Push-ups",reps:"2×20 reps",rest:"15s rest"},
+      {name:"Superman Pulls",reps:"3×15 reps",rest:"20s rest"}
+    ]
+  },
+  { name:"Stretch & Recovery", emoji:"🌿", type:"yoga", duration:"20 min", cal:80, level:"All levels",
+    desc:"Essential recovery stretches to reduce soreness and improve flexibility.",
+    exercises:[
+      {name:"Neck & Shoulder Rolls",reps:"1 minute",rest:"Flow"},
+      {name:"Chest Opener",reps:"5 breaths",rest:"Hold"},
+      {name:"Hip Flexor Stretch",reps:"5 breaths each side",rest:"Hold"},
+      {name:"Hamstring Stretch",reps:"5 breaths each leg",rest:"Hold"},
+      {name:"Figure 4 Stretch",reps:"8 breaths each side",rest:"Hold"},
+      {name:"Spinal Twist",reps:"5 breaths each side",rest:"Hold"},
+      {name:"Child's Pose",reps:"10 breaths",rest:"Rest 🌸"}
+    ]
+  }
+];
+
+// ════════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════════
+const today = new Date().toDateString();
+let state = JSON.parse(localStorage.getItem('guj_state') || '{}');
+
+function initState() {
+  if (state.date !== today) {
+    state = { date: today, water: 0, loggedMeals: [], loggedWorkouts: [], calGoal: state.calGoal || 1500,
+              streak: state.streak || 0, lastActive: state.lastActive || '', weekData: state.weekData || {} };
+  }
+  // update streak
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
+  const yStr = yesterday.toDateString();
+  if (state.lastActive === yStr) { state.streak = (state.streak||0) + 1; }
+  else if (state.lastActive !== today) { state.streak = 1; }
+  state.lastActive = today;
+  state.weekData[today] = state.weekData[today] || { meals:0, workout:false };
+  save();
+}
+
+function save() { localStorage.setItem('guj_state', JSON.stringify(state)); }
+
+// ════════════════════════════════════════════════════════════
+//  HEADER
+// ════════════════════════════════════════════════════════════
+function initHeader() {
+  const h = new Date().getHours();
+  const greetings = h<12?'Good morning, gorgeous! ☀️':h<17?'Good afternoon, superstar! 🌟':'Good evening, beautiful! 🌙';
+  document.getElementById('greeting').textContent = greetings;
+  const d = new Date();
+  document.getElementById('hdate').textContent = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('quotebar').textContent = '"' + QUOTES[d.getDay() % QUOTES.length] + '"';
+}
+
+// ════════════════════════════════════════════════════════════
+//  TIPS
+// ════════════════════════════════════════════════════════════
+function initTip() {
+  const t = TIPS[new Date().getDate() % TIPS.length];
+  document.getElementById('tip-box').querySelector('.tip-icon').textContent = t.icon;
+  document.querySelector('.tip-title').textContent = t.title;
+  document.getElementById('tip-txt').textContent = t.text;
+}
+
+// ════════════════════════════════════════════════════════════
+//  MEAL PLAN
+// ════════════════════════════════════════════════════════════
+let currentMeals = [];
+const mealSlots = [
+  { label:'Breakfast', time:'7:00 – 9:00 AM', cat:'breakfast' },
+  { label:'Lunch',     time:'12:00 – 2:00 PM', cat:'lunch' },
+  { label:'Dinner',    time:'6:00 – 8:00 PM',  cat:'dinner' },
+  { label:'Snack',     time:'3:00 – 4:00 PM',  cat:'snacks' }
+];
+
+function pickRandom(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
+
+function initMeals() {
+  const saved = localStorage.getItem('guj_meals_' + today);
+  if (saved) {
+    try { currentMeals = JSON.parse(saved); } catch(e) { currentMeals = []; }
+  }
+  if (!currentMeals.length) {
+    currentMeals = mealSlots.map(s => ({ ...s, recipe: pickRandom(RECIPES[s.cat]) }));
+    localStorage.setItem('guj_meals_' + today, JSON.stringify(currentMeals));
+  }
+  renderMeals();
+}
+
+function shuffleMeals() {
+  currentMeals = mealSlots.map(s => ({ ...s, recipe: pickRandom(RECIPES[s.cat]) }));
+  localStorage.setItem('guj_meals_' + today, JSON.stringify(currentMeals));
+  state.loggedMeals = [];
+  save();
+  renderMeals();
+}
+
+function renderMeals() {
+  const list = document.getElementById('meal-list');
+  list.innerHTML = '';
+  let totalCal=0, totalP=0, totalC=0, totalF=0, loggedCount=0;
+  currentMeals.forEach((m,i) => {
+    const logged = state.loggedMeals.includes(i);
+    if (logged) { totalCal+=m.recipe.cal; totalP+=m.recipe.p; totalC+=m.recipe.c; totalF+=m.recipe.f; loggedCount++; }
+    const el = document.createElement('div');
+    el.className = 'meal' + (logged?' logged':'');
+    el.innerHTML = `
+      <div class="me">${m.recipe.emoji}</div>
+      <div class="mi">
+        <div class="mn">${m.label}: ${m.recipe.name}</div>
+        <div class="mt">⏰ ${m.time}</div>
+      </div>
+      <div class="mc">${m.recipe.cal} kcal</div>
+      <div class="mck">${logged?'✓':''}</div>`;
+    el.onclick = (e) => {
+      if (e.target.classList.contains('mck') || e.target.closest('.mck')) { toggleMeal(i); }
+      else { openRecipeModal(m.recipe, i); }
+    };
+    list.appendChild(el);
+  });
+  updateCalStats(totalCal, totalP, totalC, totalF, loggedCount);
+}
+
+function toggleMeal(i) {
+  const idx = state.loggedMeals.indexOf(i);
+  if (!state.weekData[today]) state.weekData[today] = { meals:0, workout:false };
+  if (idx === -1) {
+    state.loggedMeals.push(i);
+    state.weekData[today].meals = (state.weekData[today].meals || 0) + 1;
+    addLog(`🍽️ Logged: ${currentMeals[i].label} — ${currentMeals[i].recipe.name}`);
+  } else {
+    state.loggedMeals.splice(idx, 1);
+    state.weekData[today].meals = Math.max(0, (state.weekData[today].meals || 1) - 1);
+  }
+  save(); renderMeals(); updateStats();
+}
+
+function updateCalStats(cal, p, c, f, loggedCount) {
+  const goal = state.calGoal || 1500;
+  const remaining = Math.max(0, goal - cal);
+  document.getElementById('stat-cal').textContent = cal;
+  document.getElementById('cal-goal-txt').textContent = goal;
+  document.getElementById('bar-cal').style.width = Math.min(100, cal/goal*100) + '%';
+  document.getElementById('ring-num').textContent = cal;
+  // ring dash
+  const r=30, circ=2*Math.PI*r, pct=Math.min(1,cal/goal);
+  document.getElementById('ring-dash').style.strokeDashoffset = circ*(1-pct);
+  // macros
+  const maxP=150, maxC=200, maxF=65;
+  document.getElementById('mb-p').style.width = Math.min(100,p/maxP*100)+'%';
+  document.getElementById('mb-c').style.width = Math.min(100,c/maxC*100)+'%';
+  document.getElementById('mb-f').style.width = Math.min(100,f/maxF*100)+'%';
+  document.getElementById('mv-p').textContent = p+'g';
+  document.getElementById('mv-c').textContent = c+'g';
+  document.getElementById('mv-f').textContent = f+'g';
+  // calories remaining pill
+  const remEl = document.getElementById('cal-remaining-txt');
+  const remBar = document.getElementById('cal-remaining-bar');
+  if (remEl) {
+    if (cal >= goal) {
+      remEl.textContent = 'Goal reached! 🎉';
+      remEl.style.color = 'var(--green)';
+      remBar.style.background = 'var(--green-light)';
+    } else {
+      remEl.textContent = remaining + ' kcal';
+      remEl.style.color = remaining < 300 ? 'var(--coral)' : 'var(--pink)';
+      remBar.style.background = 'var(--bg)';
+    }
+  }
+  if (document.getElementById('cal-logged-count')) {
+    document.getElementById('cal-logged-count').textContent = (loggedCount||0) + ' / 4 logged';
+  }
+  // progress section
+  document.getElementById('cal-big').textContent = cal;
+  document.getElementById('cal-goal-prog').textContent = goal;
+  document.getElementById('cal-prog-bar').style.width = Math.min(100,cal/goal*100)+'%';
+}
+
+// ════════════════════════════════════════════════════════════
+//  HYDRATION
+// ════════════════════════════════════════════════════════════
+function renderHydration() {
+  const grid = document.getElementById('h2o-grid');
+  grid.innerHTML = '';
+  for(let i=0;i<8;i++){
+    const d = document.createElement('div');
+    d.className = 'wc' + (i < state.water ? ' filled' : '');
+    d.textContent = i < state.water ? '💧' : '🫧';
+    d.onclick = () => toggleWater(i);
+    grid.appendChild(d);
+  }
+  document.getElementById('stat-water').textContent = state.water;
+  document.getElementById('bar-water').style.width = (state.water/8*100)+'%';
+  document.getElementById('h2o-count').textContent = state.water+' / 8 glasses';
+  document.getElementById('water-today-big').textContent = state.water;
+  document.getElementById('water-prog-bar').style.width = (state.water/8*100)+'%';
+  const msgs = ['Start hydrating! 💙','Good start! Keep drinking 💧','You\'re halfway there! 🌊','Almost there! 💦','You\'re at 6 — so close! 🌟','Almost full! One more! 💧','One more glass! 🎉','Goal reached! Amazing! 🎊'];
+  document.getElementById('h2o-msg').textContent = msgs[Math.min(state.water, 7)];
+  if (state.water >= 8) confetti();
+}
+
+function toggleWater(i) {
+  state.water = (i < state.water) ? i : i+1;
+  save(); renderHydration();
+  if (state.water >= 8) addLog('💧 Reached daily water goal! 🎉');
+}
+
+function resetWater() { state.water = 0; save(); renderHydration(); }
+
+// ════════════════════════════════════════════════════════════
+//  WEATHER
+// ════════════════════════════════════════════════════════════
+const WX_CODES = {
+  0:{icon:'☀️',desc:'Clear Sky'},1:{icon:'🌤️',desc:'Mainly Clear'},2:{icon:'⛅',desc:'Partly Cloudy'},
+  3:{icon:'☁️',desc:'Overcast'},45:{icon:'🌫️',desc:'Foggy'},48:{icon:'🌫️',desc:'Icy Fog'},
+  51:{icon:'🌦️',desc:'Light Drizzle'},53:{icon:'🌦️',desc:'Moderate Drizzle'},55:{icon:'🌧️',desc:'Heavy Drizzle'},
+  61:{icon:'🌧️',desc:'Light Rain'},63:{icon:'🌧️',desc:'Moderate Rain'},65:{icon:'🌧️',desc:'Heavy Rain'},
+  71:{icon:'🌨️',desc:'Light Snow'},73:{icon:'❄️',desc:'Moderate Snow'},75:{icon:'❄️',desc:'Heavy Snow'},
+  80:{icon:'🌦️',desc:'Rain Showers'},81:{icon:'🌧️',desc:'Heavy Showers'},82:{icon:'⛈️',desc:'Violent Showers'},
+  95:{icon:'⛈️',desc:'Thunderstorm'},96:{icon:'⛈️',desc:'Thunderstorm+Hail'},99:{icon:'⛈️',desc:'Severe Storm'}
+};
+
+const OUTFIT_MAP = [
+  { max:5,  tags:['🧥 Heavy coat','🧣 Scarf & gloves','🥾 Warm boots','🧤 Thick layers','🎿 Cosy sweater'] },
+  { max:10, tags:['🧥 Winter coat','👢 Ankle boots','🧣 Scarf','👖 Thick jeans','🧶 Warm cardigan'] },
+  { max:15, tags:['🧥 Light jacket','👟 Sneakers','👖 Jeans','🧥 Cardigan','👗 Midi dress + tights'] },
+  { max:20, tags:['🧥 Denim jacket','🌸 Spring dress','👟 White sneakers','🧁 Pastel blouse','👖 Casual pants'] },
+  { max:25, tags:['☀️ Light dress','👡 Sandals','😎 Sunglasses','🌸 Floral top','🩴 Slip-ons'] },
+  { max:99, tags:['👙 Breezy sundress','🩴 Sandals','😎 UV protection','🎀 Light linen top','👒 Sun hat'] }
+];
+
+function initWeather() {
+  if (!navigator.geolocation) { showWxErr(); return; }
+  navigator.geolocation.getCurrentPosition(async pos => {
+    try {
+      const { latitude: lat, longitude: lon } = pos.coords;
+      const [wx, geo] = await Promise.all([
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,relative_humidity_2m,apparent_temperature,wind_speed_10m&wind_speed_unit=kmh`).then(r=>r.json()),
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`).then(r=>r.json())
+      ]);
+      const cw = wx.current;
+      const code = cw.weathercode;
+      const info = WX_CODES[code] || {icon:'🌡️',desc:'Various Conditions'};
+      const temp = Math.round(cw.temperature_2m);
+      const city = geo.address?.city || geo.address?.town || geo.address?.village || 'Your Location';
+      const country = geo.address?.country_code?.toUpperCase() || '';
+      const humidity = cw.relative_humidity_2m ?? '--';
+      const wind = Math.round(cw.wind_speed_10m ?? 0);
+      const feels = Math.round(cw.apparent_temperature ?? temp);
+      document.getElementById('wx-icon').textContent = info.icon;
+      document.getElementById('wx-temp').textContent = temp+'°C';
+      document.getElementById('wx-desc').textContent = info.desc;
+      document.getElementById('wx-city').textContent = `📍 ${city}${country?', '+country:''}`;
+      document.getElementById('wx-humid').textContent = humidity+'%';
+      document.getElementById('wx-wind').textContent = wind+' km/h';
+      document.getElementById('wx-feels').textContent = feels+'°C';
+      // outfit
+      const outfit = OUTFIT_MAP.find(o => temp <= o.max) || OUTFIT_MAP[OUTFIT_MAP.length-1];
+      const tagsEl = document.getElementById('outfit-tags');
+      tagsEl.innerHTML = outfit.tags.map(t=>`<span class="otag">${t}</span>`).join('');
+      document.getElementById('wx-loading').style.display='none';
+      document.getElementById('wx-content').style.display='block';
+    } catch(e) { showWxErr(); }
+  }, () => showWxErr());
+}
+
+function showWxErr() {
+  document.getElementById('wx-loading').style.display='none';
+  document.getElementById('wx-err').style.display='block';
+}
+
+// ════════════════════════════════════════════════════════════
+//  TODAY'S WORKOUT (dashboard)
+// ════════════════════════════════════════════════════════════
+const _savedWk = localStorage.getItem('guj_wk_' + today);
+let todayWkIdx = _savedWk !== null ? parseInt(_savedWk) : (() => {
+  const d = new Date(); const idx = (d.getDate() + d.getMonth()*3) % WORKOUTS.length;
+  localStorage.setItem('guj_wk_' + today, idx); return idx;
+})();
+
+function shuffleWorkout() {
+  let next; do { next = Math.floor(Math.random()*WORKOUTS.length); } while(next === todayWkIdx && WORKOUTS.length > 1);
+  todayWkIdx = next;
+  localStorage.setItem('guj_wk_' + today, todayWkIdx);
+  renderTodayWorkout();
+}
+
+function renderTodayWorkout() {
+  const w = WORKOUTS[todayWkIdx];
+  const types = {hiit:'bc',strength:'bg',yoga:'bl',cardio:'bb'};
+  document.getElementById('today-workout').innerHTML = `
+    <div class="wk-item ${w.type}" onclick="openWorkoutModal(${todayWkIdx})">
+      <div class="wk-top">
+        <div>
+          <div style="font-size:28px;margin-bottom:4px">${w.emoji}</div>
+          <div class="wk-name">${w.name}</div>
+        </div>
+        <div style="text-align:right;font-size:12px;color:var(--muted)">
+          <div>⏱️ ${w.duration}</div>
+          <div>🔥 ${w.cal} kcal</div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge ${types[w.type]||'bg'}">${w.type.toUpperCase()}</span>
+        <span class="badge by">${w.level}</span>
+        <span class="badge bm">${w.exercises.length} exercises</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">${w.desc}</div>
+    </div>`;
+}
+
+// ════════════════════════════════════════════════════════════
+//  STATS UPDATE
+// ════════════════════════════════════════════════════════════
+function updateStats() {
+  const wCount = Object.values(state.weekData||{}).filter(d=>d.workout).length;
+  document.getElementById('stat-workout').textContent = wCount;
+  document.getElementById('bar-workout').style.width = Math.min(100,wCount/5*100)+'%';
+  document.getElementById('stat-streak').textContent = state.streak||0;
+  document.getElementById('bar-streak').style.width = Math.min(100,(state.streak||0)/30*100)+'%';
+  document.getElementById('streak-big').textContent = state.streak||0;
+  renderWeekView();
+  renderStreakDots();
+}
+
+function renderWeekView() {
+  const el = document.getElementById('week-view');
+  if (!el) return;
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const now = new Date();
+  el.innerHTML = '';
+  let done=0;
+  for(let i=6;i>=0;i--){
+    const d = new Date(now); d.setDate(d.getDate()-i);
+    const ds = d.toDateString();
+    const wd = state.weekData?.[ds];
+    const isToday = ds===today;
+    const isDone = wd?.workout || wd?.meals>0;
+    if(isDone) done++;
+    el.innerHTML += `<div class="day-c">
+      <div class="day-n">${days[d.getDay()]}</div>
+      <div class="day-r ${isToday?'today':isDone?'done':''}">${isDone?'✓':isToday?'→':''}</div>
+    </div>`;
+  }
+  document.getElementById('week-msg').textContent = `${done} active days this week! ${done>=5?'🔥 Incredible!':done>=3?'💪 Great work!':'Keep it up! 🌱'}`;
+}
+
+function renderStreakDots() {
+  const el = document.getElementById('streak-dots');
+  if (!el) return;
+  el.innerHTML = '';
+  const s = Math.min(state.streak||0,14);
+  for(let i=0;i<14;i++){
+    el.innerHTML += `<div class="sdot ${i<s?'done':i===s?'today':''}">${i<s?'🌟':i===s?'🔥':''}</div>`;
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+//  RECIPES TAB
+// ════════════════════════════════════════════════════════════
+let currentRecipeCat = 'breakfast';
+function switchRecipeTab(cat, btn) {
+  currentRecipeCat = cat;
+  document.querySelectorAll('#recipe-tabs .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderRecipeGrid();
+}
+
+const BG_COLORS = ['#FFE0EE','#E0F9F7','#FFFAEB','#E8F9EA','#F3E8FF','#DBEAFE'];
+function renderRecipeGrid() {
+  const grid = document.getElementById('recipe-grid');
+  grid.innerHTML = '';
+  RECIPES[currentRecipeCat].forEach((r,i) => {
+    const col = r.color || BG_COLORS[i%BG_COLORS.length];
+    const div = document.createElement('div');
+    div.className = 'rc';
+    div.innerHTML = `
+      <div class="rc-head" style="background:${col};position:relative">${r.emoji}
+        ${r.viral ? '<span style="position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#FF6B9D,#FF8066);color:white;font-size:9px;font-weight:800;padding:3px 8px;border-radius:99px;letter-spacing:.5px">🔥 VIRAL</span>' : ''}
+      </div>
+      <div class="rc-body">
+        <div class="rc-name">${r.name}</div>
+        <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">
+          <span class="badge bp">⏱️ ${r.time}</span>
+          <span class="badge by">${r.level}</span>
+          ${r.viral ? '<span class="badge bc">🔥 Viral</span>' : ''}
+        </div>
+        ${r.source ? `<div style="font-size:10px;color:var(--muted);margin-bottom:6px">📱 ${r.source}</div>` : ''}
+        <div class="rc-cal">${r.cal}<span style="font-size:11px;font-weight:400;color:var(--muted)"> kcal</span></div>
+        <div class="rc-macros">
+          <div class="rm"><div class="rm-v" style="color:var(--pink)">${r.p}g</div><div class="rm-l">Protein</div></div>
+          <div class="rm"><div class="rm-v" style="color:var(--blue)">${r.c}g</div><div class="rm-l">Carbs</div></div>
+          <div class="rm"><div class="rm-v" style="color:var(--yellow)">${r.f}g</div><div class="rm-l">Fat</div></div>
+        </div>
+      </div>`;
+    div.onclick = () => openRecipeModal(r, null);
+    grid.appendChild(div);
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+//  WORKOUT TAB
+// ════════════════════════════════════════════════════════════
+let currentWkCat = 'all';
+function switchWkTab(cat, btn) {
+  currentWkCat = cat;
+  document.querySelectorAll('#wk-tabs .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderWkGrid();
+}
+
+function renderWkGrid() {
+  const grid = document.getElementById('wk-grid');
+  grid.innerHTML = '';
+  const filtered = currentWkCat==='all' ? WORKOUTS : WORKOUTS.filter(w=>w.type===currentWkCat);
+  const TYPE_COLORS = {hiit:['var(--coral-light)','var(--coral)'],strength:['var(--green-light)','var(--green)'],yoga:['var(--lavender-light)','var(--lavender)'],cardio:['var(--blue-light)','var(--blue)']};
+  filtered.forEach((w,i) => {
+    const [bg,col] = TYPE_COLORS[w.type]||['var(--pink-light)','var(--pink)'];
+    const idx = WORKOUTS.indexOf(w);
+    const div = document.createElement('div');
+    div.className = 'ec';
+    div.style.borderTop = `3px solid ${col}`;
+    div.innerHTML = `
+      <div class="ec-icon">${w.emoji}</div>
+      <div class="ec-name">${w.name}</div>
+      <div class="ec-desc">${w.desc}</div>
+      <div class="badges">
+        <span class="badge" style="background:${bg};color:${col}">${w.type.toUpperCase()}</span>
+        <span class="badge by">⏱️ ${w.duration}</span>
+        <span class="badge bb">🔥 ${w.cal} kcal</span>
+        <span class="badge bm">${w.level}</span>
+      </div>`;
+    div.onclick = () => openWorkoutModal(idx);
+    grid.appendChild(div);
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+//  MODALS
+// ════════════════════════════════════════════════════════════
+let currentRecipeForLog = null;
+
+function openRecipeModal(recipe, mealIdx) {
+  currentRecipeForLog = { recipe, mealIdx };
+  const colors = ['#FFE0EE','#E0F9F7','#FFFAEB','#E8F9EA','#F3E8FF'];
+  const bg = recipe.color || colors[Math.floor(Math.random()*colors.length)];
+  document.getElementById('rm-head').style.background = `linear-gradient(135deg, ${bg}, white)`;
+  document.getElementById('rm-head').textContent = recipe.emoji;
+  document.getElementById('rm-name').textContent = recipe.name;
+  document.getElementById('rm-badges').innerHTML = `
+    <span class="badge bp">⏱️ ${recipe.time}</span>
+    <span class="badge by">${recipe.level}</span>
+    <span class="badge bm">🔥 ${recipe.cal} kcal</span>
+    ${recipe.viral ? '<span class="badge bc">🔥 Viral</span>' : ''}`;
+  const srcEl = document.getElementById('rm-source');
+  if (srcEl) srcEl.style.display = recipe.source ? '' : 'none';
+  if (srcEl && recipe.source) srcEl.textContent = '📱 ' + recipe.source;
+  document.getElementById('rm-nutrition').innerHTML = [
+    ['🔥','Calories',recipe.cal,'kcal'],
+    ['💪','Protein',recipe.p,'g'],
+    ['🌾','Carbs',recipe.c,'g'],
+    ['💛','Fat',recipe.f,'g']
+  ].map(([i,l,v,u])=>`<div style="text-align:center;padding:10px;background:var(--bg);border-radius:10px"><div style="font-size:18px">${i}</div><div style="font-size:17px;font-weight:800;margin:2px 0">${v}${u}</div><div style="font-size:10px;color:var(--muted)">${l}</div></div>`).join('');
+  document.getElementById('rm-ingredients').innerHTML = recipe.ingredients.map(i=>`<li>✦ ${i}</li>`).join('');
+  document.getElementById('rm-steps').innerHTML = recipe.steps.map(s=>`<li>${s}</li>`).join('');
+  const logBtn = document.getElementById('rm-log-btn');
+  if (mealIdx !== null) {
+    const logged = state.loggedMeals.includes(mealIdx);
+    logBtn.textContent = logged ? '✓ Logged!' : '✓ Log this meal';
+    logBtn.onclick = () => { toggleMeal(mealIdx); closeModalById('recipe-modal'); };
+  } else {
+    logBtn.textContent = '✓ Add to log';
+    logBtn.onclick = () => { addLog(`🍽️ Enjoyed: ${recipe.name} (${recipe.cal} kcal)`); closeModalById('recipe-modal'); };
+  }
+  document.getElementById('recipe-modal').classList.add('open');
+}
+
+let currentWorkoutIdx = 0;
+let timerInterval = null;
+let timerSeconds = 0;
+
+function openWorkoutModal(idx) {
+  stopTimer();
+  currentWorkoutIdx = idx;
+  const w = WORKOUTS[idx];
+  const TYPE_ICONS = {hiit:'🔥',strength:'💪',yoga:'🧘',cardio:'💃'};
+  document.getElementById('wm-head').textContent = w.emoji;
+  document.getElementById('wm-name').textContent = w.name;
+  document.getElementById('wm-badges').innerHTML = `
+    <span class="badge bc">${w.type.toUpperCase()}</span>
+    <span class="badge by">⏱️ ${w.duration}</span>
+    <span class="badge bb">🔥 ${w.cal} kcal</span>
+    <span class="badge bm">${w.level}</span>`;
+  document.getElementById('wm-timer').style.display = 'none';
+  document.getElementById('wm-start-btn').style.display = '';
+  document.getElementById('wm-stop-btn').style.display = 'none';
+  document.getElementById('wm-exercises').innerHTML = w.exercises.map((e,i)=>`
+    <li class="wk-ex-item" id="wk-ex-${i}">
+      <div class="wk-ex-num">${i+1}</div>
+      <div class="wk-ex-info">
+        <div class="wk-ex-name">${e.name}</div>
+        <div class="wk-ex-reps">${e.reps}${e.rest?' · '+e.rest:''}</div>
+      </div>
+    </li>`).join('');
+  document.getElementById('workout-modal').classList.add('open');
+}
+
+function startTimer() {
+  timerSeconds = 0;
+  document.getElementById('wm-timer').style.display = 'block';
+  document.getElementById('wm-start-btn').style.display = 'none';
+  document.getElementById('wm-stop-btn').style.display = '';
+  timerInterval = setInterval(() => {
+    timerSeconds++;
+    const m=Math.floor(timerSeconds/60).toString().padStart(2,'0');
+    const s=(timerSeconds%60).toString().padStart(2,'0');
+    document.getElementById('wm-timer').textContent = m+':'+s;
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval=null; }
+  document.getElementById('wm-start-btn').style.display = '';
+  document.getElementById('wm-stop-btn').style.display = 'none';
+}
+
+function logWorkout() {
+  const w = WORKOUTS[currentWorkoutIdx];
+  state.weekData[today] = state.weekData[today] || {};
+  state.weekData[today].workout = true;
+  save();
+  addLog(`💪 Completed: ${w.name} (${w.duration}, ${w.cal} kcal burned)`);
+  updateStats();
+  confetti();
+  closeModalById('workout-modal');
+  stopTimer();
+}
+
+function closeModal(id, event) {
+  if (event.target === event.currentTarget) closeModalById(id);
+}
+
+function closeModalById(id) {
+  document.getElementById(id).classList.remove('open');
+  if (id==='workout-modal') stopTimer();
+}
+
+// ════════════════════════════════════════════════════════════
+//  PROGRESS LOG
+// ════════════════════════════════════════════════════════════
+let logEntries = JSON.parse(localStorage.getItem('guj_log')||'[]');
+function addLog(msg) {
+  const time = new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  logEntries.unshift({ time, msg, date:today });
+  logEntries = logEntries.slice(0,50);
+  localStorage.setItem('guj_log', JSON.stringify(logEntries));
+  renderLog();
+}
+function renderLog() {
+  const el = document.getElementById('daily-log');
+  if (!el) return;
+  const todayLogs = logEntries.filter(l=>l.date===today);
+  if(!todayLogs.length) { el.textContent = 'Your logged meals and workouts will appear here 🌸'; return; }
+  el.innerHTML = todayLogs.map(l=>`<div style="padding:8px 10px;background:var(--bg);border-radius:8px;margin-bottom:6px;display:flex;gap:10px;font-size:12px"><span style="color:var(--muted);white-space:nowrap">${l.time}</span><span>${l.msg}</span></div>`).join('');
+}
+function clearLog() { logEntries = logEntries.filter(l=>l.date!==today); localStorage.setItem('guj_log',JSON.stringify(logEntries)); renderLog(); }
+
+// ════════════════════════════════════════════════════════════
+//  BMI CALCULATOR
+// ════════════════════════════════════════════════════════════
+function calcBMI() {
+  const h = parseFloat(document.getElementById('inp-height').value);
+  const w = parseFloat(document.getElementById('inp-weight').value);
+  const age = parseFloat(document.getElementById('inp-age').value);
+  const gender = document.getElementById('inp-gender').value;
+  const activity = parseFloat(document.getElementById('inp-activity').value);
+  const goalDelta = parseFloat(document.getElementById('inp-goal').value);
+  if (!h||!w||!age) { alert('Please fill in height, weight and age! 💕'); return; }
+  const bmi = w / ((h/100)**2);
+  let cat, bg, col;
+  if(bmi<18.5){cat='Underweight 🥺';bg='#DBEAFE';col='#3B82F6';}
+  else if(bmi<25){cat='Healthy Weight 🌟';bg='var(--green-light)';col='var(--green)';}
+  else if(bmi<30){cat='Overweight ⚡';bg='var(--yellow-light)';col='#D97706';}
+  else{cat='Obese — but you\'ve got this! 💙';bg='var(--coral-light)';col='var(--coral)';}
+  // Mifflin-St Jeor BMR
+  const bmr = gender==='female' ? 10*w+6.25*h-5*age-161 : 10*w+6.25*h-5*age+5;
+  const tdee = Math.round(bmr * activity);
+  const calGoal = Math.round(tdee - goalDelta);
+  document.getElementById('bmi-val').textContent = bmi.toFixed(1);
+  document.getElementById('bmi-cat').textContent = cat;
+  const box = document.getElementById('bmi-result-box');
+  box.style.background = bg; box.style.color = col;
+  document.getElementById('cal-goal-val').textContent = calGoal + ' kcal';
+  document.getElementById('bmi-result').style.display = 'block';
+  window._calcedCalGoal = calGoal;
+}
+
+function applyCalGoal() {
+  if (!window._calcedCalGoal) return;
+  state.calGoal = window._calcedCalGoal;
+  save();
+  renderMeals();
+  alert(`✅ Calorie goal set to ${window._calcedCalGoal} kcal/day! 🎯`);
+}
+
+// ════════════════════════════════════════════════════════════
+//  NAV TABS
+// ════════════════════════════════════════════════════════════
+function switchTab(name, btn) {
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  btn.classList.add('active');
+  if (name==='recipes') renderRecipeGrid();
+  if (name==='workouts') renderWkGrid();
+  if (name==='progress') { renderLog(); renderWeekView(); renderStreakDots(); }
+}
+
+// ════════════════════════════════════════════════════════════
+//  CONFETTI
+// ════════════════════════════════════════════════════════════
+function confetti() {
+  const colors = ['#FF6B9D','#A78BFA','#60A5FA','#FFD93D','#6BCB77','#FF8066','#4ECDC4'];
+  for(let i=0;i<28;i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.cssText = `left:${Math.random()*100}vw;top:0;width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*.5}s;animation-duration:${2+Math.random()*2}s;border-radius:${Math.random()>.5?'50%':'2px'}`;
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(), 4000);
+    }, i*40);
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════
+initState();
+initHeader();
+initTip();
+initMeals();
+renderHydration();
+updateStats();
+renderLog();
+renderTodayWorkout();
+initWeather();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>

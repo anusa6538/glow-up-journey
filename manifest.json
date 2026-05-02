@@ -1,0 +1,26 @@
+{
+  "name": "Glow Up Journey",
+  "short_name": "Glow Up",
+  "description": "Your daily wellness companion — recipes, workouts, hydration & more!",
+  "start_url": "./glow-up-journey.html",
+  "display": "standalone",
+  "background_color": "#FFF0F5",
+  "theme_color": "#FF6B9D",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "fitness", "food"],
+  "screenshots": []
+}
