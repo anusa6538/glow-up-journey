@@ -104,6 +104,43 @@
     .health-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
     .health-note{background:var(--yellow-light);border-radius:var(--rs);padding:12px 14px;font-size:12px;color:var(--text);line-height:1.6;border-left:3px solid var(--yellow)}
 
+    /* ── MEALDB DISCOVER CARDS ── */
+    .mdb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:16px}
+    .mdb-card{background:white;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:all .22s}
+    .mdb-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+    .mdb-img{width:100%;height:160px;background-size:cover;background-position:center;background-color:var(--pink-light)}
+    .mdb-body{padding:12px}
+    .mdb-name{font-size:13px;font-weight:700;line-height:1.35;margin-bottom:8px}
+    .mdb-meta{display:flex;gap:5px;flex-wrap:wrap}
+    .mdb-spinner{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1}
+    .discover-bar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+    .cat-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+    .cat-chip{padding:5px 13px;border-radius:99px;border:2px solid #E5E7EB;background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;color:var(--muted)}
+    .cat-chip.active{background:var(--pink);border-color:var(--pink);color:white}
+
+    /* ── MEALDB MODAL ── */
+    #mdb-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:16px}
+    .mdb-modal-inner{background:white;border-radius:var(--r);max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+    .mdb-modal-photo{width:100%;height:220px;object-fit:cover;border-radius:var(--r) var(--r) 0 0;background-size:cover;background-position:center}
+    .mdb-modal-body{padding:20px}
+    .mdb-modal-title{font-size:20px;font-weight:800;margin-bottom:8px;line-height:1.2}
+    .mdb-modal-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+    .mdb-section-label{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;margin-top:14px}
+    .mdb-ingredients{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:5px}
+    .mdb-ingredients li{font-size:12px;background:var(--bg);border-radius:7px;padding:5px 9px}
+    .mdb-instructions{font-size:13px;line-height:1.7;color:var(--text);white-space:pre-wrap;max-height:220px;overflow-y:auto;background:var(--bg);border-radius:var(--rs);padding:12px}
+    .mdb-yt-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 20px;background:#FF0000;color:white;border-radius:99px;font-weight:700;font-size:13px;text-decoration:none;transition:opacity .2s}
+    .mdb-yt-btn:hover{opacity:.85}
+    .mdb-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.45);border:none;color:white;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+
+    /* ── HEALTH IMPORT ── */
+    .import-box{background:linear-gradient(135deg,#E8F9EA,#DBEAFE);border-radius:var(--r);padding:20px;margin-bottom:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+    .import-icon{font-size:42px;flex-shrink:0}
+    .import-info{flex:1;min-width:220px}
+    .import-title{font-size:15px;font-weight:800;margin-bottom:4px}
+    .import-desc{font-size:12px;color:var(--muted);line-height:1.6}
+    .import-steps{font-size:11px;color:var(--text);line-height:1.8;background:rgba(255,255,255,.6);border-radius:var(--rs);padding:10px 12px;margin-top:8px}
+
     /* ── HEADER ── */
     header{background:linear-gradient(135deg,#FF6B9D 0%,#A78BFA 50%,#60A5FA 100%);padding:24px 32px 20px;color:white;position:relative;overflow:hidden}
     header::before{content:'';position:absolute;top:-40%;right:-5%;width:380px;height:380px;background:rgba(255,255,255,0.08);border-radius:50%}
@@ -536,10 +573,44 @@
       <button class="tab" onclick="switchRecipeTab('dinner',this)">🌙 Dinner</button>
       <button class="tab" onclick="switchRecipeTab('snacks',this)">🍎 Snacks</button>
       <button class="tab" onclick="switchRecipeTab('all',this)">🌟 All</button>
+      <button class="tab" onclick="switchRecipeTab('discover',this)">🌍 Discover</button>
     </div>
-    <button class="btn btn-ghost btn-sm" onclick="surpriseRecipe()" style="white-space:nowrap">🎲 Surprise me!</button>
+    <button class="btn btn-ghost btn-sm" onclick="surpriseRecipe()" style="white-space:nowrap" id="surprise-btn">🎲 Surprise me!</button>
   </div>
   <div class="recipe-grid" id="recipe-grid"></div>
+
+  <!-- DISCOVER SECTION (TheMealDB) -->
+  <div id="discover-section" style="display:none">
+    <div class="discover-bar">
+      <div class="search-wrap" style="flex:1;min-width:200px;margin-bottom:0">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" id="mealdb-search" type="text" placeholder="Search any meal… e.g. pasta, chicken, salad" onkeydown="if(event.key==='Enter')searchMealDB(this.value)">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="searchMealDB(document.getElementById('mealdb-search').value)">Search</button>
+      <button class="btn btn-ghost btn-sm" onclick="randomMealDB()">🎲 Random</button>
+    </div>
+    <div class="cat-chips" id="mealdb-cats"></div>
+    <div class="mdb-grid" id="mealdb-grid">
+      <div class="mdb-spinner">🍽️ Search a meal or pick a category above to explore thousands of real recipes!</div>
+    </div>
+  </div>
+</div>
+
+<!-- MEALDB MODAL -->
+<div id="mdb-modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="mdb-modal-inner">
+    <button class="mdb-close" onclick="document.getElementById('mdb-modal').style.display='none'">✕</button>
+    <div class="mdb-modal-photo" id="mdb-modal-img"></div>
+    <div class="mdb-modal-body">
+      <div class="mdb-modal-title" id="mdb-modal-name"></div>
+      <div class="mdb-modal-tags" id="mdb-modal-tags"></div>
+      <div class="mdb-section-label">Ingredients</div>
+      <ul class="mdb-ingredients" id="mdb-modal-ingredients"></ul>
+      <div class="mdb-section-label">Instructions</div>
+      <div class="mdb-instructions" id="mdb-modal-instructions"></div>
+      <a class="mdb-yt-btn" id="mdb-modal-yt" href="#" target="_blank" rel="noopener">▶️ Watch on YouTube</a>
+    </div>
+  </div>
 </div>
 
 <!-- ════════ WORKOUTS ════════ -->
@@ -570,8 +641,24 @@
   <div class="sec-h">
     <div><div class="sec-title">❤️ Health Tracker</div><div class="sec-sub">Steps, blood pressure & daily wellness 🌿</div></div>
   </div>
-  <div class="health-note" style="margin-bottom:18px">
-    📱 <strong>Apple Health / Google Fit:</strong> Web apps can't directly read from Health apps — this is an iOS/Android security restriction. Check your Health app for today's stats and enter them below. Your data saves locally on this device. 🔒
+  <!-- Apple Health Import -->
+  <div class="import-box">
+    <div class="import-icon">🍎</div>
+    <div class="import-info">
+      <div class="import-title">Import from Apple Health</div>
+      <div class="import-desc">Export your Health data from the iPhone app and import it here — steps, weight, sleep & blood pressure auto-fill instantly.</div>
+      <div class="import-steps">
+        1️⃣ Open <strong>Health app</strong> on iPhone<br>
+        2️⃣ Tap your profile photo → <strong>Export All Health Data</strong><br>
+        3️⃣ Save the zip → unzip it → find <strong>export.xml</strong><br>
+        4️⃣ Tap the button below and select <strong>export.xml</strong>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+      <button class="btn btn-primary" id="import-btn" onclick="triggerHealthImport()" style="white-space:nowrap">📲 Import Apple Health</button>
+      <div style="font-size:10px;color:var(--muted);text-align:center">Data stays on your device 🔒</div>
+    </div>
+    <input type="file" id="health-xml-input" accept=".xml" style="display:none" onchange="importHealthXML(event)">
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px">
 
@@ -1811,6 +1898,12 @@ function switchRecipeTab(cat, btn) {
   currentRecipeCat = cat;
   document.querySelectorAll('#recipe-tabs .tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
+  const isDiscover = cat === 'discover';
+  document.getElementById('recipe-grid').style.display = isDiscover ? 'none' : '';
+  document.getElementById('discover-section').style.display = isDiscover ? 'block' : 'none';
+  document.getElementById('recipe-search').style.display = isDiscover ? 'none' : '';
+  document.getElementById('surprise-btn').style.display = isDiscover ? 'none' : '';
+  if (isDiscover) { initMealDBCats(); return; }
   document.getElementById('recipe-search').value = '';
   renderRecipeGrid();
 }
@@ -2082,6 +2175,202 @@ function switchTab(name, btn) {
   if (name === 'health') initHealthTab();
   if (name === 'journal') renderJournal();
   if (name === 'progress') { renderLog(); renderWeekView(); renderStreakDots(); }
+}
+
+// ════════════════════════════════════════════════════════════
+//  MEALDB DISCOVER
+// ════════════════════════════════════════════════════════════
+const MEALDB_CATS = ['Beef','Chicken','Seafood','Vegetarian','Pasta','Salad','Dessert','Breakfast','Soup','Vegan','Side','Starter'];
+let mealDBLoading = false;
+
+function initMealDBCats() {
+  const wrap = document.getElementById('mealdb-cats');
+  if (wrap.children.length) return;
+  MEALDB_CATS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-chip';
+    btn.textContent = c;
+    btn.onclick = () => {
+      document.querySelectorAll('.cat-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('mealdb-search').value = '';
+      searchMealDBByCategory(c);
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+async function searchMealDB(query) {
+  if (!query.trim()) return;
+  document.querySelectorAll('.cat-chip').forEach(b => b.classList.remove('active'));
+  showMealDBLoading();
+  try {
+    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    renderMealDBGrid(data.meals || []);
+  } catch(e) {
+    document.getElementById('mealdb-grid').innerHTML = '<div class="mdb-spinner">❌ Couldn\'t load recipes — check your connection and try again.</div>';
+  }
+}
+
+async function searchMealDBByCategory(cat) {
+  showMealDBLoading();
+  try {
+    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(cat)}`);
+    const data = await res.json();
+    renderMealDBGrid(data.meals || []);
+  } catch(e) {
+    document.getElementById('mealdb-grid').innerHTML = '<div class="mdb-spinner">❌ Couldn\'t load recipes.</div>';
+  }
+}
+
+async function randomMealDB() {
+  showMealDBLoading('🎲 Finding a surprise recipe...');
+  try {
+    const res = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+    const data = await res.json();
+    if (data.meals) openMealDBModal(data.meals[0]);
+    document.getElementById('mealdb-grid').innerHTML = '<div class="mdb-spinner">🍽️ Search or pick a category to explore more!</div>';
+  } catch(e) {}
+}
+
+function showMealDBLoading(msg) {
+  document.getElementById('mealdb-grid').innerHTML = `<div class="mdb-spinner"><div class="spinner" style="border-color:var(--pink-light);border-top-color:var(--pink);margin:0 auto 12px"></div>${msg||'Loading recipes...'}</div>`;
+}
+
+function renderMealDBGrid(meals) {
+  const grid = document.getElementById('mealdb-grid');
+  if (!meals.length) {
+    grid.innerHTML = '<div class="mdb-spinner">😕 No recipes found — try a different search!</div>';
+    return;
+  }
+  grid.innerHTML = '';
+  meals.slice(0, 40).forEach(meal => {
+    const div = document.createElement('div');
+    div.className = 'mdb-card';
+    div.innerHTML = `
+      <div class="mdb-img" style="background-image:url('${meal.strMealThumb}/preview')"></div>
+      <div class="mdb-body">
+        <div class="mdb-name">${meal.strMeal}</div>
+        <div class="mdb-meta">
+          ${meal.strArea ? `<span class="badge bp">🌍 ${meal.strArea}</span>` : ''}
+          ${meal.strCategory ? `<span class="badge by">🍽️ ${meal.strCategory}</span>` : ''}
+        </div>
+      </div>`;
+    div.onclick = () => fetchAndOpenMealDB(meal.idMeal);
+    grid.appendChild(div);
+  });
+}
+
+async function fetchAndOpenMealDB(id) {
+  try {
+    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+    const data = await res.json();
+    if (data.meals) openMealDBModal(data.meals[0]);
+  } catch(e) {}
+}
+
+function openMealDBModal(meal) {
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    const ing = meal[`strIngredient${i}`];
+    const meas = meal[`strMeasure${i}`];
+    if (ing && ing.trim()) ingredients.push(`${meas ? meas.trim() + ' ' : ''}${ing.trim()}`);
+  }
+  const modal = document.getElementById('mdb-modal');
+  document.getElementById('mdb-modal-img').style.backgroundImage = `url('${meal.strMealThumb}')`;
+  document.getElementById('mdb-modal-name').textContent = meal.strMeal;
+  document.getElementById('mdb-modal-tags').innerHTML = `
+    ${meal.strArea ? `<span class="badge bp">🌍 ${meal.strArea}</span>` : ''}
+    ${meal.strCategory ? `<span class="badge by">🍽️ ${meal.strCategory}</span>` : ''}
+    ${meal.strTags ? meal.strTags.split(',').filter(Boolean).map(t => `<span class="badge bm">#${t.trim()}</span>`).join('') : ''}`;
+  document.getElementById('mdb-modal-ingredients').innerHTML = ingredients.map(i => `<li>${i}</li>`).join('');
+  document.getElementById('mdb-modal-instructions').textContent = meal.strInstructions || 'No instructions available.';
+  const ytBtn = document.getElementById('mdb-modal-yt');
+  ytBtn.style.display = meal.strYoutube ? 'inline-flex' : 'none';
+  if (meal.strYoutube) ytBtn.href = meal.strYoutube;
+  modal.style.display = 'flex';
+}
+
+// ════════════════════════════════════════════════════════════
+//  APPLE HEALTH XML IMPORT
+// ════════════════════════════════════════════════════════════
+function triggerHealthImport() {
+  document.getElementById('health-xml-input').click();
+}
+
+function importHealthXML(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const btn = document.getElementById('import-btn');
+  btn.textContent = '⏳ Reading file...';
+  btn.disabled = true;
+
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(evt.target.result, 'text/xml');
+      const records = xml.querySelectorAll('Record');
+
+      const stepsByDay = {}, weightByDay = {}, sleepByDay = {}, bpSysByDay = {}, bpDiaByDay = {};
+      let total = 0;
+
+      records.forEach(r => {
+        const type = r.getAttribute('type');
+        const dateStr = (r.getAttribute('startDate') || '').slice(0, 10);
+        const value = parseFloat(r.getAttribute('value'));
+        if (!dateStr) return;
+
+        if (type === 'HKQuantityTypeIdentifierStepCount') {
+          stepsByDay[dateStr] = (stepsByDay[dateStr] || 0) + (isNaN(value) ? 0 : value);
+          total++;
+        } else if (type === 'HKQuantityTypeIdentifierBodyMass') {
+          const unit = (r.getAttribute('unit') || 'kg').toLowerCase();
+          weightByDay[dateStr] = { value, unit: unit.startsWith('lb') ? 'lbs' : 'kg' };
+        } else if (['HKCategoryValueSleepAnalysisAsleep','HKCategoryValueSleepAnalysisAsleepCore','HKCategoryValueSleepAnalysisAsleepDeep','HKCategoryValueSleepAnalysisAsleepREM'].includes(r.getAttribute('value'))) {
+          const hrs = (new Date(r.getAttribute('endDate')) - new Date(r.getAttribute('startDate'))) / 3600000;
+          if (hrs > 0) sleepByDay[dateStr] = (sleepByDay[dateStr] || 0) + hrs;
+        } else if (type === 'HKQuantityTypeIdentifierBloodPressureSystolic') {
+          bpSysByDay[dateStr] = value;
+        } else if (type === 'HKQuantityTypeIdentifierBloodPressureDiastolic') {
+          bpDiaByDay[dateStr] = value;
+        }
+      });
+
+      // Merge into healthData
+      Object.keys(stepsByDay).forEach(d => {
+        if (!healthData[d]) healthData[d] = { stepsGoal: 10000 };
+        healthData[d].steps = Math.round(stepsByDay[d]);
+      });
+      Object.keys(weightByDay).forEach(d => {
+        if (!healthData[d]) healthData[d] = { stepsGoal: 10000 };
+        healthData[d].weight = weightByDay[d].value;
+        healthData[d].weightUnit = weightByDay[d].unit;
+      });
+      Object.keys(sleepByDay).forEach(d => {
+        if (!healthData[d]) healthData[d] = { stepsGoal: 10000 };
+        healthData[d].sleep = Math.round(sleepByDay[d] * 10) / 10;
+      });
+      Object.keys(bpSysByDay).forEach(d => {
+        if (!healthData[d]) healthData[d] = { stepsGoal: 10000 };
+        healthData[d].sys = Math.round(bpSysByDay[d]);
+        if (bpDiaByDay[d]) healthData[d].dia = Math.round(bpDiaByDay[d]);
+      });
+
+      saveHealth();
+      initHealthTab();
+
+      const days = Object.keys(stepsByDay).length;
+      btn.textContent = `✅ Imported ${days} days of data!`;
+      setTimeout(() => { btn.textContent = '📲 Import Apple Health'; btn.disabled = false; }, 4000);
+    } catch(err) {
+      btn.textContent = '❌ Couldn\'t read file — is it export.xml?';
+      btn.disabled = false;
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
 }
 
 // ════════════════════════════════════════════════════════════
