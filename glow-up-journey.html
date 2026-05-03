@@ -39,6 +39,71 @@
     ::-webkit-scrollbar{width:5px;height:5px}
     ::-webkit-scrollbar-thumb{background:var(--pink-light);border-radius:99px}
 
+    /* ── AFFIRMATION CARD ── */
+    .af-card{background:linear-gradient(135deg,var(--pink-light),var(--lavender-light));border-radius:var(--r);padding:18px 24px;margin-bottom:22px;text-align:center;position:relative;overflow:hidden}
+    .af-card::before{content:'✨';position:absolute;font-size:90px;opacity:.07;top:-12px;right:6px;pointer-events:none}
+    .af-icon{font-size:26px;margin-bottom:6px}
+    .af-text{font-size:15px;font-weight:600;color:var(--text);line-height:1.6;font-style:italic}
+    .af-day{font-size:11px;color:var(--muted);margin-top:6px}
+
+    /* ── CUSTOM MEAL FORM ── */
+    .custom-form{background:var(--bg);border-radius:var(--rs);padding:14px;margin-top:10px;display:none}
+    .custom-form.open{display:block}
+    .custom-inputs{display:grid;grid-template-columns:1fr 70px 60px 60px;gap:8px;align-items:end;margin-bottom:10px}
+    .ci-group{display:flex;flex-direction:column;gap:4px}
+    .ci-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+    .ci-input{padding:8px 10px;border:2px solid #E5E7EB;border-radius:8px;font-size:13px;outline:none;font-family:inherit;width:100%;transition:border-color .2s}
+    .ci-input:focus{border-color:var(--pink)}
+    @media(max-width:600px){.custom-inputs{grid-template-columns:1fr 1fr}}
+
+    /* ── RECIPE SEARCH ── */
+    .search-wrap{position:relative;margin-bottom:16px}
+    .search-input{width:100%;padding:10px 14px 10px 38px;border:2px solid #E5E7EB;border-radius:99px;font-size:13px;outline:none;background:white;transition:border-color .2s;font-family:inherit}
+    .search-input:focus{border-color:var(--pink)}
+    .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;opacity:.45}
+    .no-results{text-align:center;padding:48px 20px;color:var(--muted)}
+
+    /* ── VIDEO CHANNEL CARDS ── */
+    .vc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+    .vc-card{background:white;border-radius:var(--r);padding:18px;box-shadow:var(--shadow);transition:all .2s;text-decoration:none;color:inherit;display:block}
+    .vc-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+    .vc-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .vc-emo{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+    .vc-name{font-weight:800;font-size:14px;line-height:1.2}
+    .vc-handle{font-size:11px;color:var(--muted);margin-top:1px}
+    .vc-subs{font-size:11px;font-weight:700;margin-top:2px}
+    .vc-desc{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:10px}
+    .vc-open{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:5px 14px;border-radius:99px;background:var(--pink-light);color:var(--pink);transition:all .2s}
+    .vc-card:hover .vc-open{background:var(--pink);color:white}
+
+    /* ── JOURNAL STICKY NOTES ── */
+    .journal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+    .journal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+    .sticky{border-radius:var(--r);padding:18px;min-height:165px;display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 16px rgba(0,0,0,.08);position:relative;transition:transform .2s,box-shadow .2s}
+    .sticky:hover{transform:translateY(-2px) rotate(.4deg);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+    .sticky-title{border:none;background:transparent;font-size:14px;font-weight:700;width:100%;outline:none;font-family:inherit;color:var(--text);resize:none}
+    .sticky-title::placeholder{opacity:.4}
+    .sticky-body{border:none;background:transparent;font-size:13px;width:100%;flex:1;outline:none;resize:none;line-height:1.6;font-family:inherit;color:var(--text);min-height:80px}
+    .sticky-body::placeholder{opacity:.35}
+    .sticky-del{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.08);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:background .2s;color:rgba(0,0,0,.4)}
+    .sticky-del:hover{background:rgba(0,0,0,.18)}
+    .sticky-date{font-size:9px;opacity:.4;margin-top:auto;padding-top:4px}
+    .sticky-add{background:white;border:2.5px dashed #E5E7EB;border-radius:var(--r);min-height:165px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;gap:8px;color:var(--muted);font-size:13px;font-weight:600}
+    .sticky-add:hover{border-color:var(--pink);color:var(--pink);background:var(--pink-light)}
+
+    /* ── HEALTH TRACKER ── */
+    .steps-ring-wrap{display:flex;align-items:center;gap:20px;padding:18px;background:linear-gradient(135deg,var(--green-light),var(--blue-light));border-radius:var(--r);margin-bottom:14px;flex-wrap:wrap}
+    .hr-cont{position:relative;width:110px;height:110px;flex-shrink:0}
+    .hr-svg{width:110px;height:110px;transform:rotate(-90deg)}
+    .hr-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+    .hr-val{font-size:18px;font-weight:800;color:var(--green);line-height:1}
+    .hr-lbl{font-size:9px;color:var(--muted)}
+    .bp-card{border-radius:var(--rs);padding:14px;text-align:center;margin-bottom:12px}
+    .bp-reading{font-size:30px;font-weight:800;line-height:1;letter-spacing:-1px}
+    .bp-cat{font-size:13px;font-weight:600;margin-top:4px}
+    .health-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+    .health-note{background:var(--yellow-light);border-radius:var(--rs);padding:12px 14px;font-size:12px;color:var(--text);line-height:1.6;border-left:3px solid var(--yellow)}
+
     /* ── HEADER ── */
     header{background:linear-gradient(135deg,#FF6B9D 0%,#A78BFA 50%,#60A5FA 100%);padding:24px 32px 20px;color:white;position:relative;overflow:hidden}
     header::before{content:'';position:absolute;top:-40%;right:-5%;width:380px;height:380px;background:rgba(255,255,255,0.08);border-radius:50%}
@@ -291,6 +356,8 @@
   <button class="nav-btn active" onclick="switchTab('dashboard',this)">🏠 Dashboard</button>
   <button class="nav-btn" onclick="switchTab('recipes',this)">🥗 Recipes</button>
   <button class="nav-btn" onclick="switchTab('workouts',this)">💪 Workouts</button>
+  <button class="nav-btn" onclick="switchTab('health',this)">❤️ Health</button>
+  <button class="nav-btn" onclick="switchTab('journal',this)">📓 Journal</button>
   <button class="nav-btn" onclick="switchTab('progress',this)">📈 Progress</button>
   <button class="nav-btn" onclick="switchTab('calc',this)">🧮 Calculator</button>
 </nav>
@@ -299,6 +366,13 @@
 
 <!-- ════════ DASHBOARD ════════ -->
 <div class="sec active" id="sec-dashboard">
+
+  <!-- AFFIRMATION CARD -->
+  <div class="af-card">
+    <div class="af-icon" id="af-icon">🌸</div>
+    <div class="af-text" id="af-text">Loading your affirmation...</div>
+    <div class="af-day" id="af-day"></div>
+  </div>
 
   <!-- STATS ROW -->
   <div class="stats">
@@ -368,6 +442,23 @@
         <!-- Meals -->
         <div id="meal-list"></div>
         <p class="note">Tap a meal to log it ✓ or view recipe details</p>
+        <!-- Custom meal log -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+          <span style="font-size:12px;color:var(--muted)">Not in the plan?</span>
+          <button class="btn btn-ghost btn-sm" onclick="toggleCustomForm()">➕ Log your own meal</button>
+        </div>
+        <div class="custom-form" id="custom-form">
+          <div class="custom-inputs">
+            <div class="ci-group"><label class="ci-label">Meal name</label><input class="ci-input" id="ci-name" placeholder="e.g. Chicken wrap" type="text"></div>
+            <div class="ci-group"><label class="ci-label">Kcal</label><input class="ci-input" id="ci-cal" placeholder="350" type="number" min="0"></div>
+            <div class="ci-group"><label class="ci-label">Protein g</label><input class="ci-input" id="ci-p" placeholder="20" type="number" min="0"></div>
+            <div class="ci-group"><label class="ci-label">Carbs g</label><input class="ci-input" id="ci-c" placeholder="30" type="number" min="0"></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-primary btn-sm" onclick="logCustomMeal()">✓ Log meal</button>
+            <button class="btn btn-ghost btn-sm" onclick="toggleCustomForm()">Cancel</button>
+          </div>
+        </div>
       </div>
 
       <!-- Hydration Card -->
@@ -434,11 +525,19 @@
   <div class="sec-h">
     <div><div class="sec-title">🥗 Recipe Book</div><div class="sec-sub">Delicious calorie-deficit meals ✨</div></div>
   </div>
-  <div class="tabs" id="recipe-tabs">
-    <button class="tab active" onclick="switchRecipeTab('breakfast',this)">🌅 Breakfast</button>
-    <button class="tab" onclick="switchRecipeTab('lunch',this)">☀️ Lunch</button>
-    <button class="tab" onclick="switchRecipeTab('dinner',this)">🌙 Dinner</button>
-    <button class="tab" onclick="switchRecipeTab('snacks',this)">🍎 Snacks</button>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="recipe-search" type="text" placeholder="Search recipes… e.g. salmon, cottage cheese, viral" oninput="renderRecipeGrid()">
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+    <div class="tabs" id="recipe-tabs" style="margin-bottom:0">
+      <button class="tab active" onclick="switchRecipeTab('breakfast',this)">🌅 Breakfast</button>
+      <button class="tab" onclick="switchRecipeTab('lunch',this)">☀️ Lunch</button>
+      <button class="tab" onclick="switchRecipeTab('dinner',this)">🌙 Dinner</button>
+      <button class="tab" onclick="switchRecipeTab('snacks',this)">🍎 Snacks</button>
+      <button class="tab" onclick="switchRecipeTab('all',this)">🌟 All</button>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="surpriseRecipe()" style="white-space:nowrap">🎲 Surprise me!</button>
   </div>
   <div class="recipe-grid" id="recipe-grid"></div>
 </div>
@@ -453,9 +552,136 @@
     <button class="tab" onclick="switchWkTab('hiit',this)">🔥 HIIT</button>
     <button class="tab" onclick="switchWkTab('strength',this)">💪 Strength</button>
     <button class="tab" onclick="switchWkTab('yoga',this)">🧘 Yoga</button>
+    <button class="tab" onclick="switchWkTab('pilates',this)">🧱 Wall Pilates</button>
     <button class="tab" onclick="switchWkTab('cardio',this)">💃 Cardio</button>
+    <button class="tab" onclick="switchWkTab('videos',this)">▶️ Video Guides</button>
   </div>
   <div class="ex-grid" id="wk-grid"></div>
+  <div id="vc-section" style="display:none">
+    <div style="background:linear-gradient(135deg,var(--pink-light),var(--lavender-light));border-radius:var(--r);padding:16px 20px;margin-bottom:20px;font-size:13px;line-height:1.6">
+      <strong>🎬 Trusted Workout Channels</strong> — all free on YouTube. These creators have millions of followers and proven results. Tap any card to open their channel. 💕
+    </div>
+    <div class="vc-grid" id="vc-grid"></div>
+  </div>
+</div>
+
+<!-- ════════ HEALTH ════════ -->
+<div class="sec" id="sec-health">
+  <div class="sec-h">
+    <div><div class="sec-title">❤️ Health Tracker</div><div class="sec-sub">Steps, blood pressure & daily wellness 🌿</div></div>
+  </div>
+  <div class="health-note" style="margin-bottom:18px">
+    📱 <strong>Apple Health / Google Fit:</strong> Web apps can't directly read from Health apps — this is an iOS/Android security restriction. Check your Health app for today's stats and enter them below. Your data saves locally on this device. 🔒
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px">
+
+    <!-- Steps -->
+    <div class="card">
+      <div class="ch"><div class="ct">👣 Step Counter</div><span id="steps-goal-lbl" style="font-size:12px;color:var(--muted)">Goal: 10,000</span></div>
+      <div class="steps-ring-wrap">
+        <div class="hr-cont">
+          <svg class="hr-svg" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="44" fill="none" stroke="#E5E7EB" stroke-width="9"/>
+            <circle cx="55" cy="55" r="44" fill="none" stroke="url(#sg)" stroke-width="9" stroke-linecap="round"
+              stroke-dasharray="276.5" id="steps-ring-dash" stroke-dashoffset="276.5"/>
+            <defs><linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#6BCB77"/><stop offset="100%" stop-color="#60A5FA"/>
+            </linearGradient></defs>
+          </svg>
+          <div class="hr-inner"><div class="hr-val" id="steps-display">0</div><div class="hr-lbl">steps</div></div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;margin-bottom:4px" id="steps-msg">Start moving! 🚶</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:12px" id="steps-pct">0% of daily goal</div>
+          <div class="bar" style="height:7px"><div class="bar-fill" id="steps-bar" style="width:0%;background:linear-gradient(90deg,var(--green),var(--blue))"></div></div>
+        </div>
+      </div>
+      <div class="health-row">
+        <div class="ci-group"><label class="ci-label">Today's steps</label><input class="ci-input" id="inp-steps" type="number" placeholder="8500" min="0" oninput="updateSteps()"></div>
+        <div class="ci-group"><label class="ci-label">Daily goal</label><input class="ci-input" id="inp-steps-goal" type="number" placeholder="10000" min="1000" oninput="updateStepsGoal()"></div>
+      </div>
+      <div style="margin-top:8px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px">THIS WEEK</div>
+        <div id="steps-week" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </div>
+    </div>
+
+    <!-- Blood Pressure -->
+    <div class="card">
+      <div class="ch"><div class="ct">💉 Blood Pressure</div><button class="btn btn-ghost btn-sm" onclick="clearBP()">Clear</button></div>
+      <div class="bp-card" id="bp-display-card" style="background:var(--green-light)">
+        <div class="bp-reading" id="bp-display">-- / --</div>
+        <div class="bp-cat" id="bp-cat">Enter a reading below</div>
+      </div>
+      <div class="health-row">
+        <div class="ci-group"><label class="ci-label">Systolic (top)</label><input class="ci-input" id="inp-sys" type="number" placeholder="120" min="60" max="250"></div>
+        <div class="ci-group"><label class="ci-label">Diastolic (bottom)</label><input class="ci-input" id="inp-dia" type="number" placeholder="80" min="40" max="150"></div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;margin-bottom:14px" onclick="logBP()">✓ Log Reading</button>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:11px">
+          <div style="padding:6px 10px;background:var(--blue-light);border-radius:7px">🔵 Normal: &lt;120/80</div>
+          <div style="padding:6px 10px;background:var(--yellow-light);border-radius:7px">🟡 Elevated: 120-129</div>
+          <div style="padding:6px 10px;background:var(--coral-light);border-radius:7px">🟠 High Stage 1: 130-139</div>
+          <div style="padding:6px 10px;background:#FFD6D6;border-radius:7px">🔴 High Stage 2: 140+</div>
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px">RECENT READINGS</div>
+        <div id="bp-history" style="font-size:12px;color:var(--muted)">No readings yet 🌸</div>
+      </div>
+    </div>
+
+    <!-- Weekly wellness check -->
+    <div class="card">
+      <div class="ch"><div class="ct">😴 Wellness Check</div></div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px">SLEEP LAST NIGHT</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap" id="sleep-btns">
+            <button class="btn btn-ghost btn-sm" onclick="logSleep(5)">😴 5h</button>
+            <button class="btn btn-ghost btn-sm" onclick="logSleep(6)">😴 6h</button>
+            <button class="btn btn-ghost btn-sm" onclick="logSleep(7)">😴 7h</button>
+            <button class="btn btn-ghost btn-sm" onclick="logSleep(8)">🌙 8h</button>
+            <button class="btn btn-ghost btn-sm" onclick="logSleep(9)">🌙 9h+</button>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px" id="sleep-display">Not logged yet</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px">HOW ARE YOU FEELING?</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap" id="mood-btns">
+            <button style="font-size:22px;background:none;border:2px solid #E5E7EB;border-radius:10px;padding:6px 10px;cursor:pointer;transition:all .2s" onclick="logMood('😊')" title="Happy">😊</button>
+            <button style="font-size:22px;background:none;border:2px solid #E5E7EB;border-radius:10px;padding:6px 10px;cursor:pointer;transition:all .2s" onclick="logMood('⚡')" title="Energised">⚡</button>
+            <button style="font-size:22px;background:none;border:2px solid #E5E7EB;border-radius:10px;padding:6px 10px;cursor:pointer;transition:all .2s" onclick="logMood('😐')" title="Okay">😐</button>
+            <button style="font-size:22px;background:none;border:2px solid #E5E7EB;border-radius:10px;padding:6px 10px;cursor:pointer;transition:all .2s" onclick="logMood('😴')" title="Tired">😴</button>
+            <button style="font-size:22px;background:none;border:2px solid #E5E7EB;border-radius:10px;padding:6px 10px;cursor:pointer;transition:all .2s" onclick="logMood('💪')" title="Strong">💪</button>
+            <button style="font-size:22px;background:none;border:2px solid #E5E7EB;border-radius:10px;padding:6px 10px;cursor:pointer;transition:all .2s" onclick="logMood('🤒')" title="Unwell">🤒</button>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px" id="mood-display">Not logged yet</div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px">WEIGHT (optional)</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="ci-input" style="max-width:100px" id="inp-weight-log" type="number" placeholder="65.0" step="0.1">
+            <select class="ci-input" style="max-width:70px" id="inp-weight-unit">
+              <option value="kg">kg</option><option value="lbs">lbs</option>
+            </select>
+            <button class="btn btn-ghost btn-sm" onclick="logWeight()">Log</button>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:6px" id="weight-display">Not logged yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ JOURNAL ════════ -->
+<div class="sec" id="sec-journal">
+  <div class="journal-top">
+    <div><div class="sec-title">📓 My Journal</div><div class="sec-sub">Thoughts, goals, reminders — your safe space 🌸</div></div>
+    <button class="btn btn-primary" onclick="addNote()">➕ New note</button>
+  </div>
+  <div class="journal-grid" id="journal-grid"></div>
 </div>
 
 <!-- ════════ PROGRESS ════════ -->
@@ -833,6 +1059,134 @@ const WORKOUTS = [
       {name:"Spinal Twist",reps:"5 breaths each side",rest:"Hold"},
       {name:"Child's Pose",reps:"10 breaths",rest:"Rest 🌸"}
     ]
+  },
+  { name:"Wall Pilates — Core & Posture", emoji:"🧱", type:"pilates", duration:"20 min", cal:130, level:"Beginner",
+    desc:"Use your wall for better form and deeper muscle activation. Inspired by Move with Nicole & Lottie Murphy.",
+    exercises:[
+      {name:"Wall Sit Hold",reps:"3×45s",rest:"20s rest"},
+      {name:"Standing Wall Leg Lifts",reps:"3×12 each side",rest:"15s rest"},
+      {name:"Wall-Supported Hip Circles",reps:"2×10 each direction",rest:"10s rest"},
+      {name:"Wall Plank (hands on wall)",reps:"3×30s",rest:"20s rest"},
+      {name:"Wall Roll-Down (slow)",reps:"10 reps",rest:"Flow"},
+      {name:"Standing Wall Crunch",reps:"3×15 reps",rest:"15s rest"},
+      {name:"Wall Bridge (feet on wall)",reps:"3×15 reps",rest:"15s rest"}
+    ]
+  },
+  { name:"Wall Pilates — Booty & Legs", emoji:"🍑", type:"pilates", duration:"25 min", cal:155, level:"Beginner",
+    desc:"Glutes, thighs and calves using just a wall. Perfect beginner-friendly low-impact burn.",
+    exercises:[
+      {name:"Wall Squat Pulses",reps:"3×30 pulses",rest:"20s rest"},
+      {name:"Wall Leg Press (lying, feet on wall)",reps:"3×20 reps",rest:"15s rest"},
+      {name:"Wall Bridge Pulses",reps:"3×30 pulses",rest:"15s rest"},
+      {name:"Wall Clamshell",reps:"3×15 each side",rest:"15s rest"},
+      {name:"Donkey Kick at Wall",reps:"3×15 each side",rest:"15s rest"},
+      {name:"Wall Calf Raises",reps:"3×30 reps",rest:"10s rest"},
+      {name:"Wall Inner Thigh Press",reps:"3×20 reps",rest:"15s rest"}
+    ]
+  },
+  { name:"Wall Pilates — Full Body Flow", emoji:"🌸", type:"pilates", duration:"30 min", cal:140, level:"All levels",
+    desc:"Full-body wall Pilates flow to lengthen, tone and de-stress. No equipment needed.",
+    exercises:[
+      {name:"Wall Angels",reps:"2×15 reps",rest:"Flow"},
+      {name:"Standing Wall Chest Stretch",reps:"5 breaths each side",rest:"Hold"},
+      {name:"Wall-Supported Single Leg Deadlift",reps:"3×10 each side",rest:"20s rest"},
+      {name:"Wall Sit + Arm Raises",reps:"3×40s",rest:"20s rest"},
+      {name:"Wall Push-ups",reps:"3×15 reps",rest:"20s rest"},
+      {name:"Wall Side Leg Lift",reps:"3×15 each side",rest:"15s rest"},
+      {name:"Wall-Assisted Spine Roll",reps:"8 reps slow",rest:"Flow"},
+      {name:"Savasana",reps:"3 minutes",rest:"Rest 🌸"}
+    ]
+  }
+];
+
+// ════════════════════════════════════════════════════════════
+//  AFFIRMATIONS (one per day of month)
+// ════════════════════════════════════════════════════════════
+const AFFIRMATIONS = [
+  {icon:"🌸", text:"I am becoming the best version of myself, one healthy choice at a time."},
+  {icon:"💕", text:"My body is capable of amazing things and I treat it with love every day."},
+  {icon:"💪", text:"Every workout I complete is proof of my strength and quiet dedication."},
+  {icon:"🥗", text:"I choose nourishing foods because I love my body, not to punish it."},
+  {icon:"✨", text:"Progress is happening even when I can't see it. I trust the process."},
+  {icon:"🦋", text:"I am not perfect, and that is perfectly okay. I just keep going."},
+  {icon:"🌙", text:"Rest is productive. Recovery is a vital part of my journey."},
+  {icon:"⚡", text:"I deserve to feel strong, healthy and energised every single day."},
+  {icon:"🌟", text:"I am proud of how far I've come and excited for where I'm going."},
+  {icon:"🌱", text:"Small consistent actions create massive results over time. I am consistent."},
+  {icon:"💫", text:"My worth is not measured by a number on a scale. I am so much more."},
+  {icon:"🎵", text:"I fuel my body with intention and move it with joy and gratitude."},
+  {icon:"🦅", text:"I release what no longer serves me and embrace what lifts me up."},
+  {icon:"💧", text:"Drinking water, sleeping well and moving my body are daily acts of self-love."},
+  {icon:"🌺", text:"I am allowed to take up space. I am enough exactly as I am right now."},
+  {icon:"☀️", text:"Today I choose energy, vitality and radiant health. I am glowing."},
+  {icon:"🙏", text:"I am grateful for a body that carries me through every challenge and joy."},
+  {icon:"🏗️", text:"My healthy habits are building the life and body I have always dreamed of."},
+  {icon:"🧠", text:"I am stronger than my cravings and wiser than my excuses. I choose growth."},
+  {icon:"👣", text:"Every glass of water is self-care. Every step forward counts. I am doing it."},
+  {icon:"🎉", text:"I celebrate every win, no matter how small. Progress is still progress!"},
+  {icon:"🗓️", text:"I trust my journey completely. My timeline is uniquely and perfectly mine."},
+  {icon:"🌅", text:"I wake up each day choosing to move, nourish and let my inner light glow."},
+  {icon:"🌈", text:"My mindset is my greatest fitness tool. I choose positivity every morning."},
+  {icon:"💗", text:"I am building discipline born from love, not punishment. This is self-care."},
+  {icon:"🏃", text:"Consistency over perfection — showing up imperfectly is still showing up."},
+  {icon:"🤍", text:"I deserve the same compassion I give to others. I am gentle with myself."},
+  {icon:"🛤️", text:"Health is not a destination — it is the beautiful way I choose to live."},
+  {icon:"✨", text:"My glow comes from within: from rest, real food, movement and self-belief."},
+  {icon:"🎨", text:"I am a work in progress and that is not a flaw — it is something beautiful."},
+  {icon:"🌻", text:"Today is a brand new opportunity to feel amazing. I embrace it fully. 🌻"}
+];
+
+// ════════════════════════════════════════════════════════════
+//  VIDEO CHANNELS
+// ════════════════════════════════════════════════════════════
+const VIDEO_CHANNELS = [
+  { name:"Chloe Ting", handle:"@ChloeTing", subs:"25.5M subscribers", emoji:"🔥", bg:"#FFE0EE", subs_color:"var(--pink)",
+    specialty:"HIIT · Full Body · Challenges",
+    desc:"The queen of 2-week challenges! Structured HIIT and full-body workouts that genuinely deliver results. Perfect for weight loss.",
+    url:"https://www.youtube.com/@ChloeTing",
+    tags:["hiit","fullbody","beginner","challenges"]
+  },
+  { name:"Grow with Jo", handle:"@GrowwithJo", subs:"3.7M subscribers", emoji:"💃", bg:"#DBEAFE", subs_color:"var(--blue)",
+    specialty:"Dance Cardio · Low Impact · Fun",
+    desc:"Super fun dance cardio that doesn't feel like exercise. Jo's energy is unmatched — low-impact, no-jumping options available.",
+    url:"https://www.youtube.com/@GrowwithJo",
+    tags:["cardio","dance","lowimpact","fun"]
+  },
+  { name:"Pamela Reif", handle:"@PamelaRf1", subs:"10.2M subscribers", emoji:"✨", bg:"#F3E8FF", subs_color:"var(--lavender)",
+    specialty:"Sculpting · Pilates · HIIT",
+    desc:"Aesthetic, intense workouts with no talking — just clean music and perfect form. Great for sculpting and core strength.",
+    url:"https://www.youtube.com/@PamelaRf1",
+    tags:["sculpting","pilates","hiit","core"]
+  },
+  { name:"Blogilates", handle:"@blogilates", subs:"11M subscribers", emoji:"🌸", bg:"#FFE0EE", subs_color:"var(--pink)",
+    specialty:"POP Pilates · Core · Toning",
+    desc:"Cassey Ho's iconic POP Pilates — music-driven, fun and incredibly effective for toning. Her monthly workout calendars are 🔥",
+    url:"https://www.youtube.com/@blogilates",
+    tags:["pilates","core","toning","fun"]
+  },
+  { name:"MadFit", handle:"@MadFit", subs:"8.9M subscribers", emoji:"🎵", bg:"#FFFAEB", subs_color:"#D97706",
+    specialty:"Dance Cardio · Low Impact · Music",
+    desc:"Workout to your favourite songs! Maddie's dance-based cardio makes sweating genuinely enjoyable. Great for all levels.",
+    url:"https://www.youtube.com/@MadFit",
+    tags:["cardio","dance","music","lowimpact"]
+  },
+  { name:"Move with Nicole", handle:"@MoveWithNicole", subs:"2.1M subscribers", emoji:"🧘", bg:"#E0F9F7", subs_color:"var(--mint)",
+    specialty:"Pilates · Wall Pilates · Yoga Fusion",
+    desc:"The best channel for wall pilates! Nicole's gentle but effective pilates blends perfectly with yoga. Ideal for all levels.",
+    url:"https://www.youtube.com/@MoveWithNicole",
+    tags:["pilates","wallpilates","yoga","beginner"]
+  },
+  { name:"Lottie Murphy", handle:"@LottieMurphy", subs:"850K subscribers", emoji:"🌿", bg:"#E8F9EA", subs_color:"var(--green)",
+    specialty:"Wall Pilates · Mindful Movement",
+    desc:"Certified Pilates instructor famous for her 28-day wall pilates challenges. Gentle, mindful and incredibly beginner-friendly.",
+    url:"https://www.youtube.com/@LottieMurphy",
+    tags:["wallpilates","pilates","beginner","mindful"]
+  },
+  { name:"Heather Robertson", handle:"@HeatherRobertsonFitness", subs:"2.8M subscribers", emoji:"💪", bg:"#E8F9EA", subs_color:"var(--green)",
+    specialty:"Strength · Full Body · Programs",
+    desc:"Structured 12-week progressive programs for real strength gains at home. No talking, just work — perfect for results-driven people.",
+    url:"https://www.youtube.com/@HeatherRobertsonFitness",
+    tags:["strength","fullbody","programs","noequipment"]
   }
 ];
 
@@ -1174,85 +1528,6 @@ function renderStreakDots() {
   }
 }
 
-// ════════════════════════════════════════════════════════════
-//  RECIPES TAB
-// ════════════════════════════════════════════════════════════
-let currentRecipeCat = 'breakfast';
-function switchRecipeTab(cat, btn) {
-  currentRecipeCat = cat;
-  document.querySelectorAll('#recipe-tabs .tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  renderRecipeGrid();
-}
-
-const BG_COLORS = ['#FFE0EE','#E0F9F7','#FFFAEB','#E8F9EA','#F3E8FF','#DBEAFE'];
-function renderRecipeGrid() {
-  const grid = document.getElementById('recipe-grid');
-  grid.innerHTML = '';
-  RECIPES[currentRecipeCat].forEach((r,i) => {
-    const col = r.color || BG_COLORS[i%BG_COLORS.length];
-    const div = document.createElement('div');
-    div.className = 'rc';
-    div.innerHTML = `
-      <div class="rc-head" style="background:${col};position:relative">${r.emoji}
-        ${r.viral ? '<span style="position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#FF6B9D,#FF8066);color:white;font-size:9px;font-weight:800;padding:3px 8px;border-radius:99px;letter-spacing:.5px">🔥 VIRAL</span>' : ''}
-      </div>
-      <div class="rc-body">
-        <div class="rc-name">${r.name}</div>
-        <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">
-          <span class="badge bp">⏱️ ${r.time}</span>
-          <span class="badge by">${r.level}</span>
-          ${r.viral ? '<span class="badge bc">🔥 Viral</span>' : ''}
-        </div>
-        ${r.source ? `<div style="font-size:10px;color:var(--muted);margin-bottom:6px">📱 ${r.source}</div>` : ''}
-        <div class="rc-cal">${r.cal}<span style="font-size:11px;font-weight:400;color:var(--muted)"> kcal</span></div>
-        <div class="rc-macros">
-          <div class="rm"><div class="rm-v" style="color:var(--pink)">${r.p}g</div><div class="rm-l">Protein</div></div>
-          <div class="rm"><div class="rm-v" style="color:var(--blue)">${r.c}g</div><div class="rm-l">Carbs</div></div>
-          <div class="rm"><div class="rm-v" style="color:var(--yellow)">${r.f}g</div><div class="rm-l">Fat</div></div>
-        </div>
-      </div>`;
-    div.onclick = () => openRecipeModal(r, null);
-    grid.appendChild(div);
-  });
-}
-
-// ════════════════════════════════════════════════════════════
-//  WORKOUT TAB
-// ════════════════════════════════════════════════════════════
-let currentWkCat = 'all';
-function switchWkTab(cat, btn) {
-  currentWkCat = cat;
-  document.querySelectorAll('#wk-tabs .tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  renderWkGrid();
-}
-
-function renderWkGrid() {
-  const grid = document.getElementById('wk-grid');
-  grid.innerHTML = '';
-  const filtered = currentWkCat==='all' ? WORKOUTS : WORKOUTS.filter(w=>w.type===currentWkCat);
-  const TYPE_COLORS = {hiit:['var(--coral-light)','var(--coral)'],strength:['var(--green-light)','var(--green)'],yoga:['var(--lavender-light)','var(--lavender)'],cardio:['var(--blue-light)','var(--blue)']};
-  filtered.forEach((w,i) => {
-    const [bg,col] = TYPE_COLORS[w.type]||['var(--pink-light)','var(--pink)'];
-    const idx = WORKOUTS.indexOf(w);
-    const div = document.createElement('div');
-    div.className = 'ec';
-    div.style.borderTop = `3px solid ${col}`;
-    div.innerHTML = `
-      <div class="ec-icon">${w.emoji}</div>
-      <div class="ec-name">${w.name}</div>
-      <div class="ec-desc">${w.desc}</div>
-      <div class="badges">
-        <span class="badge" style="background:${bg};color:${col}">${w.type.toUpperCase()}</span>
-        <span class="badge by">⏱️ ${w.duration}</span>
-        <span class="badge bb">🔥 ${w.cal} kcal</span>
-        <span class="badge bm">${w.level}</span>
-      </div>`;
-    div.onclick = () => openWorkoutModal(idx);
-    grid.appendChild(div);
-  });
-}
 
 // ════════════════════════════════════════════════════════════
 //  MODALS
@@ -1423,19 +1698,6 @@ function applyCalGoal() {
 }
 
 // ════════════════════════════════════════════════════════════
-//  NAV TABS
-// ════════════════════════════════════════════════════════════
-function switchTab(name, btn) {
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sec-'+name).classList.add('active');
-  btn.classList.add('active');
-  if (name==='recipes') renderRecipeGrid();
-  if (name==='workouts') renderWkGrid();
-  if (name==='progress') { renderLog(); renderWeekView(); renderStreakDots(); }
-}
-
-// ════════════════════════════════════════════════════════════
 //  CONFETTI
 // ════════════════════════════════════════════════════════════
 function confetti() {
@@ -1452,11 +1714,383 @@ function confetti() {
 }
 
 // ════════════════════════════════════════════════════════════
+//  AFFIRMATION
+// ════════════════════════════════════════════════════════════
+function initAffirmation() {
+  const a = AFFIRMATIONS[(new Date().getDate() - 1) % AFFIRMATIONS.length];
+  document.getElementById('af-icon').textContent = a.icon;
+  document.getElementById('af-text').textContent = '"' + a.text + '"';
+  document.getElementById('af-day').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}) + ' affirmation 💕';
+}
+
+// ════════════════════════════════════════════════════════════
+//  CUSTOM MEAL LOGGING
+// ════════════════════════════════════════════════════════════
+function toggleCustomForm() {
+  document.getElementById('custom-form').classList.toggle('open');
+}
+
+function logCustomMeal() {
+  const name = document.getElementById('ci-name').value.trim();
+  const cal  = parseInt(document.getElementById('ci-cal').value) || 0;
+  const p    = parseInt(document.getElementById('ci-p').value) || 0;
+  const c    = parseInt(document.getElementById('ci-c').value) || 0;
+  if (!name) { document.getElementById('ci-name').focus(); return; }
+  if (!state.customMeals) state.customMeals = [];
+  state.customMeals.push({ name, cal, p, c, f:0 });
+  if (!state.weekData[today]) state.weekData[today] = { meals:0, workout:false };
+  state.weekData[today].meals = (state.weekData[today].meals||0) + 1;
+  save();
+  addLog(`🍽️ Custom meal: ${name} (${cal} kcal)`);
+  // Update calorie stats including custom meals
+  let totalCal=0, totalP=0, totalC=0, totalF=0, cnt=0;
+  state.loggedMeals.forEach(i => { if(currentMeals[i]){ totalCal+=currentMeals[i].recipe.cal; totalP+=currentMeals[i].recipe.p; totalC+=currentMeals[i].recipe.c; totalF+=currentMeals[i].recipe.f; cnt++; }});
+  (state.customMeals||[]).forEach(m => { totalCal+=m.cal; totalP+=m.p; totalC+=m.c; totalF+=m.f; cnt++; });
+  updateCalStats(totalCal, totalP, totalC, totalF, cnt);
+  updateStats();
+  // Reset form
+  ['ci-name','ci-cal','ci-p','ci-c'].forEach(id => document.getElementById(id).value = '');
+  toggleCustomForm();
+}
+
+// ════════════════════════════════════════════════════════════
+//  RECIPE SEARCH + SURPRISE
+// ════════════════════════════════════════════════════════════
+function renderRecipeGrid() {
+  const grid = document.getElementById('recipe-grid');
+  const query = (document.getElementById('recipe-search')?.value || '').toLowerCase().trim();
+  let pool = currentRecipeCat === 'all'
+    ? Object.values(RECIPES).flat()
+    : RECIPES[currentRecipeCat] || [];
+  if (query) pool = Object.values(RECIPES).flat().filter(r =>
+    r.name.toLowerCase().includes(query) ||
+    (r.source||'').toLowerCase().includes(query) ||
+    r.ingredients.join(' ').toLowerCase().includes(query)
+  );
+  grid.innerHTML = '';
+  if (!pool.length) {
+    grid.innerHTML = '<div class="no-results"><div style="font-size:40px;margin-bottom:10px">🔍</div><div style="font-weight:600">No recipes found</div><div style="font-size:12px;margin-top:4px">Try a different keyword!</div></div>';
+    return;
+  }
+  const BG = ['#FFE0EE','#E0F9F7','#FFFAEB','#E8F9EA','#F3E8FF','#DBEAFE'];
+  pool.forEach((r,i) => {
+    const col = r.color || BG[i % BG.length];
+    const div = document.createElement('div');
+    div.className = 'rc';
+    div.innerHTML = `
+      <div class="rc-head" style="background:${col};position:relative">${r.emoji}
+        ${r.viral?'<span style="position:absolute;top:8px;right:8px;background:linear-gradient(135deg,#FF6B9D,#FF8066);color:white;font-size:9px;font-weight:800;padding:3px 8px;border-radius:99px;letter-spacing:.5px">🔥 VIRAL</span>':''}
+      </div>
+      <div class="rc-body">
+        <div class="rc-name">${r.name}</div>
+        <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">
+          <span class="badge bp">⏱️ ${r.time}</span>
+          <span class="badge by">${r.level}</span>
+          ${r.viral?'<span class="badge bc">🔥 Viral</span>':''}
+        </div>
+        ${r.source?`<div style="font-size:10px;color:var(--muted);margin-bottom:6px">📱 ${r.source}</div>`:''}
+        <div class="rc-cal">${r.cal}<span style="font-size:11px;font-weight:400;color:var(--muted)"> kcal</span></div>
+        <div class="rc-macros">
+          <div class="rm"><div class="rm-v" style="color:var(--pink)">${r.p}g</div><div class="rm-l">Protein</div></div>
+          <div class="rm"><div class="rm-v" style="color:var(--blue)">${r.c}g</div><div class="rm-l">Carbs</div></div>
+          <div class="rm"><div class="rm-v" style="color:var(--yellow)">${r.f}g</div><div class="rm-l">Fat</div></div>
+        </div>
+      </div>`;
+    div.onclick = () => openRecipeModal(r, null);
+    grid.appendChild(div);
+  });
+}
+
+function surpriseRecipe() {
+  const all = Object.values(RECIPES).flat();
+  const r = all[Math.floor(Math.random() * all.length)];
+  openRecipeModal(r, null);
+}
+
+function switchRecipeTab(cat, btn) {
+  currentRecipeCat = cat;
+  document.querySelectorAll('#recipe-tabs .tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('recipe-search').value = '';
+  renderRecipeGrid();
+}
+
+// ════════════════════════════════════════════════════════════
+//  WORKOUT VIDEO CHANNELS
+// ════════════════════════════════════════════════════════════
+function renderVideoChannels() {
+  const grid = document.getElementById('vc-grid');
+  if (!grid) return;
+  grid.innerHTML = VIDEO_CHANNELS.map(c => `
+    <a class="vc-card" href="${c.url}" target="_blank" rel="noopener" style="border-top:3px solid ${c.subs_color}">
+      <div class="vc-top">
+        <div class="vc-emo" style="background:${c.bg}">${c.emoji}</div>
+        <div>
+          <div class="vc-name">${c.name}</div>
+          <div class="vc-handle">${c.handle}</div>
+          <div class="vc-subs" style="color:${c.subs_color}">▶ ${c.subs}</div>
+        </div>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:6px">${c.specialty}</div>
+      <div class="vc-desc">${c.desc}</div>
+      <span class="vc-open">Open YouTube ↗</span>
+    </a>`).join('');
+}
+
+function switchWkTab(cat, btn) {
+  currentWkCat = cat;
+  document.querySelectorAll('#wk-tabs .tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const isVideos = cat === 'videos';
+  document.getElementById('wk-grid').style.display = isVideos ? 'none' : '';
+  document.getElementById('vc-section').style.display = isVideos ? 'block' : 'none';
+  if (isVideos) { renderVideoChannels(); return; }
+  renderWkGrid();
+}
+
+function renderWkGrid() {
+  const grid = document.getElementById('wk-grid');
+  grid.innerHTML = '';
+  const filtered = currentWkCat === 'all' ? WORKOUTS : WORKOUTS.filter(w => w.type === currentWkCat);
+  const TYPE_COLORS = { hiit:['var(--coral-light)','var(--coral)'], strength:['var(--green-light)','var(--green)'],
+    yoga:['var(--lavender-light)','var(--lavender)'], cardio:['var(--blue-light)','var(--blue)'],
+    pilates:['var(--mint-light)','var(--mint)'] };
+  filtered.forEach(w => {
+    const [bg,col] = TYPE_COLORS[w.type] || ['var(--pink-light)','var(--pink)'];
+    const idx = WORKOUTS.indexOf(w);
+    const div = document.createElement('div');
+    div.className = 'ec';
+    div.style.borderTop = `3px solid ${col}`;
+    div.innerHTML = `
+      <div class="ec-icon">${w.emoji}</div>
+      <div class="ec-name">${w.name}</div>
+      <div class="ec-desc">${w.desc}</div>
+      <div class="badges">
+        <span class="badge" style="background:${bg};color:${col}">${w.type.toUpperCase()}</span>
+        <span class="badge by">⏱️ ${w.duration}</span>
+        <span class="badge bb">🔥 ${w.cal} kcal</span>
+        <span class="badge bm">${w.level}</span>
+      </div>`;
+    div.onclick = () => openWorkoutModal(idx);
+    grid.appendChild(div);
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+//  HEALTH TRACKER
+// ════════════════════════════════════════════════════════════
+let healthData = JSON.parse(localStorage.getItem('guj_health') || '{}');
+function saveHealth() { localStorage.setItem('guj_health', JSON.stringify(healthData)); }
+
+function initHealthTab() {
+  const d = healthData[today] || {};
+  if (d.steps) { document.getElementById('inp-steps').value = d.steps; updateSteps(); }
+  if (d.stepsGoal) document.getElementById('inp-steps-goal').value = d.stepsGoal;
+  if (d.sys && d.dia) renderBPDisplay(d.sys, d.dia);
+  if (d.sleep) document.getElementById('sleep-display').textContent = `Logged: ${d.sleep} hours 😴`;
+  if (d.mood) document.getElementById('mood-display').textContent = `Feeling: ${d.mood} today`;
+  if (d.weight) document.getElementById('weight-display').textContent = `Logged: ${d.weight} ${d.weightUnit||'kg'}`;
+  renderBPHistory();
+  renderStepsWeek();
+}
+
+function updateSteps() {
+  const steps = parseInt(document.getElementById('inp-steps').value) || 0;
+  const goal = parseInt(document.getElementById('inp-steps-goal').value) || 10000;
+  if (!healthData[today]) healthData[today] = {};
+  healthData[today].steps = steps;
+  healthData[today].stepsGoal = goal;
+  saveHealth();
+  const pct = Math.min(1, steps / goal);
+  const circ = 2 * Math.PI * 44;
+  document.getElementById('steps-ring-dash').style.strokeDashoffset = circ * (1 - pct);
+  document.getElementById('steps-display').textContent = steps >= 1000 ? (steps/1000).toFixed(1)+'k' : steps;
+  document.getElementById('steps-bar').style.width = (pct*100)+'%';
+  document.getElementById('steps-pct').textContent = Math.round(pct*100)+'% of daily goal';
+  const msgs = ['Time to move! 🚶','Great start! 🌱','Making progress! 💪','Halfway there! 🎯','So close! 🔥','Goal smashed! 🎉'];
+  document.getElementById('steps-msg').textContent = msgs[Math.min(5, Math.floor(pct*6))];
+  renderStepsWeek();
+}
+
+function updateStepsGoal() { updateSteps(); }
+
+function renderStepsWeek() {
+  const el = document.getElementById('steps-week');
+  if (!el) return;
+  const days = ['S','M','T','W','T','F','S'];
+  const now = new Date();
+  el.innerHTML = '';
+  for (let i=6; i>=0; i--) {
+    const d = new Date(now); d.setDate(d.getDate()-i);
+    const ds = d.toDateString();
+    const s = healthData[ds]?.steps || 0;
+    const goal = healthData[ds]?.stepsGoal || 10000;
+    const pct = Math.min(100, s/goal*100);
+    const isToday = ds === today;
+    el.innerHTML += `<div style="text-align:center;flex:1">
+      <div style="font-size:9px;color:var(--muted);margin-bottom:4px">${days[d.getDay()]}</div>
+      <div style="height:40px;background:#F3F4F6;border-radius:4px;overflow:hidden;display:flex;align-items:flex-end">
+        <div style="width:100%;height:${pct}%;background:${isToday?'var(--green)':'#A3E4AA'};border-radius:4px;transition:height .5s"></div>
+      </div>
+      <div style="font-size:8px;color:var(--muted);margin-top:3px">${s>=1000?(s/1000).toFixed(1)+'k':s||'-'}</div>
+    </div>`;
+  }
+}
+
+function logBP() {
+  const sys = parseInt(document.getElementById('inp-sys').value);
+  const dia = parseInt(document.getElementById('inp-dia').value);
+  if (!sys || !dia || sys < 60 || dia < 40) { alert('Please enter valid blood pressure values! 💕'); return; }
+  if (!healthData[today]) healthData[today] = {};
+  healthData[today].sys = sys;
+  healthData[today].dia = dia;
+  if (!healthData[today].bpHistory) healthData[today].bpHistory = [];
+  healthData[today].bpHistory.unshift({ sys, dia, time: new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) });
+  saveHealth();
+  renderBPDisplay(sys, dia);
+  renderBPHistory();
+  addLog(`💉 BP logged: ${sys}/${dia} mmHg`);
+}
+
+function renderBPDisplay(sys, dia) {
+  document.getElementById('bp-display').textContent = sys + ' / ' + dia;
+  let cat, bg, col;
+  if (sys < 120 && dia < 80) { cat='Normal ✅'; bg='var(--green-light)'; col='var(--green)'; }
+  else if (sys < 130 && dia < 80) { cat='Elevated ⚡'; bg='var(--yellow-light)'; col='#D97706'; }
+  else if (sys < 140 || dia < 90) { cat='High — Stage 1 🟠'; bg='var(--coral-light)'; col='var(--coral)'; }
+  else { cat='High — Stage 2 🔴 See a doctor'; bg='#FFD6D6'; col='#DC2626'; }
+  const card = document.getElementById('bp-display-card');
+  card.style.background = bg;
+  document.getElementById('bp-cat').textContent = cat;
+  document.getElementById('bp-cat').style.color = col;
+}
+
+function clearBP() {
+  if (healthData[today]) { delete healthData[today].sys; delete healthData[today].dia; delete healthData[today].bpHistory; saveHealth(); }
+  document.getElementById('bp-display').textContent = '-- / --';
+  document.getElementById('bp-cat').textContent = 'Enter a reading below';
+  document.getElementById('bp-display-card').style.background = 'var(--green-light)';
+  document.getElementById('bp-cat').style.color = 'var(--text)';
+  document.getElementById('bp-history').textContent = 'No readings yet 🌸';
+}
+
+function renderBPHistory() {
+  const el = document.getElementById('bp-history');
+  if (!el) return;
+  const hist = healthData[today]?.bpHistory || [];
+  if (!hist.length) { el.textContent = 'No readings yet 🌸'; return; }
+  el.innerHTML = hist.slice(0,5).map(h => {
+    const isNorm = h.sys<120 && h.dia<80;
+    return `<div style="display:flex;justify-content:space-between;padding:6px 10px;border-radius:7px;margin-bottom:4px;background:${isNorm?'var(--green-light)':'var(--yellow-light)'}">
+      <span style="font-weight:700">${h.sys}/${h.dia} mmHg</span><span style="opacity:.6">${h.time}</span></div>`;
+  }).join('');
+}
+
+function logSleep(hrs) {
+  if (!healthData[today]) healthData[today] = {};
+  healthData[today].sleep = hrs;
+  saveHealth();
+  document.getElementById('sleep-display').textContent = `Logged: ${hrs} hours ${hrs>=7?'✅ Great!':hrs>=6?'🟡 Almost!':'🔴 Try for more'}`;
+  addLog(`😴 Sleep logged: ${hrs} hours`);
+}
+
+function logMood(emoji) {
+  if (!healthData[today]) healthData[today] = {};
+  healthData[today].mood = emoji;
+  saveHealth();
+  const labels = {'😊':'Happy & positive!','⚡':'Energised & strong!','😐':'Just okay today.','😴':'Tired — rest up! 🌙','💪':'Feeling powerful!','🤒':'Not great — be gentle with yourself 💕'};
+  document.getElementById('mood-display').textContent = emoji + ' ' + (labels[emoji]||'');
+  document.querySelectorAll('#mood-btns button').forEach(b => b.style.background = b.textContent.trim()===emoji?'var(--pink-light)':'');
+}
+
+function logWeight() {
+  const w = parseFloat(document.getElementById('inp-weight-log').value);
+  const unit = document.getElementById('inp-weight-unit').value;
+  if (!w) return;
+  if (!healthData[today]) healthData[today] = {};
+  healthData[today].weight = w;
+  healthData[today].weightUnit = unit;
+  saveHealth();
+  document.getElementById('weight-display').textContent = `Logged: ${w} ${unit} ✅`;
+  addLog(`⚖️ Weight logged: ${w} ${unit}`);
+}
+
+// ════════════════════════════════════════════════════════════
+//  JOURNAL / STICKY NOTES
+// ════════════════════════════════════════════════════════════
+const NOTE_COLORS = ['#FFE0EE','#FFFAEB','#E0F9F7','#F3E8FF','#E8F9EA','#DBEAFE','#FFE8E0'];
+let journalNotes = JSON.parse(localStorage.getItem('guj_journal') || '[]');
+function saveJournal() { localStorage.setItem('guj_journal', JSON.stringify(journalNotes)); }
+
+function renderJournal() {
+  const grid = document.getElementById('journal-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  journalNotes.forEach((note, i) => {
+    const el = document.createElement('div');
+    el.className = 'sticky';
+    el.style.background = note.color;
+    el.innerHTML = `
+      <button class="sticky-del" onclick="deleteNote(${i})">✕</button>
+      <textarea class="sticky-title" placeholder="Title…" rows="1" oninput="updateNote(${i},'title',this.value)">${note.title||''}</textarea>
+      <textarea class="sticky-body" placeholder="Write anything… goals, thoughts, reminders, gratitude 🌸" oninput="updateNote(${i},'content',this.value)">${note.content||''}</textarea>
+      <div class="sticky-date">${note.date}</div>`;
+    grid.appendChild(el);
+  });
+  // Add note button at the end
+  const add = document.createElement('div');
+  add.className = 'sticky-add';
+  add.innerHTML = '<div style="font-size:32px">➕</div><div>New note</div>';
+  add.onclick = addNote;
+  grid.appendChild(add);
+}
+
+function addNote() {
+  const colors = NOTE_COLORS;
+  journalNotes.unshift({
+    id: Date.now(), title:'', content:'',
+    color: colors[Math.floor(Math.random()*colors.length)],
+    date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+  });
+  saveJournal();
+  renderJournal();
+  // Focus the new note's title
+  setTimeout(() => { const titles = document.querySelectorAll('.sticky-title'); if(titles[0]) titles[0].focus(); }, 50);
+}
+
+function deleteNote(i) {
+  if (!confirm('Delete this note?')) return;
+  journalNotes.splice(i, 1);
+  saveJournal();
+  renderJournal();
+}
+
+function updateNote(i, field, val) {
+  if (journalNotes[i]) { journalNotes[i][field] = val; saveJournal(); }
+}
+
+// ════════════════════════════════════════════════════════════
+//  UPDATE switchTab TO HANDLE NEW SECTIONS
+// ════════════════════════════════════════════════════════════
+function switchTab(name, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'recipes') renderRecipeGrid();
+  if (name === 'workouts') renderWkGrid();
+  if (name === 'health') initHealthTab();
+  if (name === 'journal') renderJournal();
+  if (name === 'progress') { renderLog(); renderWeekView(); renderStreakDots(); }
+}
+
+// ════════════════════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════════════════════
 initState();
 initHeader();
 initTip();
+initAffirmation();
 initMeals();
 renderHydration();
 updateStats();
