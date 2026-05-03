@@ -660,6 +660,64 @@
     </div>
     <input type="file" id="health-xml-input" accept=".xml" style="display:none" onchange="importHealthXML(event)">
   </div>
+  <!-- Shortcuts success toast -->
+  <div id="shortcut-toast" style="display:none;background:linear-gradient(135deg,var(--green-light),var(--blue-light));border-radius:var(--r);padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:14px">
+    <div style="font-size:32px">⚡</div>
+    <div>
+      <div style="font-weight:800;font-size:14px">Health data synced from iPhone!</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:3px" id="shortcut-toast-detail"></div>
+    </div>
+  </div>
+
+  <!-- Shortcut Setup Card -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="ch">
+      <div class="ct">⚡ Auto-Sync with iPhone Shortcuts</div>
+      <span style="font-size:11px;padding:3px 10px;background:var(--green-light);color:var(--green);border-radius:99px;font-weight:700">FREE</span>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">Create a free iOS Shortcut that reads your Health data and opens this app with everything pre-filled. Run it manually or set it to run automatically every morning.</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:16px">
+      <div style="background:var(--bg);border-radius:var(--rs);padding:12px">
+        <div style="font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.4px;margin-bottom:8px">STEP 1 — CREATE SHORTCUT</div>
+        <div style="font-size:12px;line-height:1.8">
+          1. Open <strong>Shortcuts app</strong> on iPhone<br>
+          2. Tap <strong>+</strong> → name it <em>"Sync Health"</em><br>
+          3. Tap <strong>Add Action</strong>
+        </div>
+      </div>
+      <div style="background:var(--bg);border-radius:var(--rs);padding:12px">
+        <div style="font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.4px;margin-bottom:8px">STEP 2 — ADD HEALTH ACTIONS</div>
+        <div style="font-size:12px;line-height:1.8">
+          Search <strong>"Find Health Samples"</strong><br>
+          → Type: <strong>Step Count</strong>, Filter today<br>
+          Add <strong>"Calculate Statistics"</strong> → Sum<br>
+          Set Variable → <code>steps</code><br>
+          Repeat for <strong>Heart Rate</strong> → Variable <code>hr</code>
+        </div>
+      </div>
+      <div style="background:var(--bg);border-radius:var(--rs);padding:12px">
+        <div style="font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.4px;margin-bottom:8px">STEP 3 — OPEN THE APP</div>
+        <div style="font-size:12px;line-height:1.8">
+          Add action <strong>"URL"</strong> — paste the URL below<br>
+          Replace <code>[steps]</code> and <code>[hr]</code> with your variables<br>
+          Add action <strong>"Open URL"</strong><br>
+          Done! 🎉 Add to Home Screen for quick access
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#1e1e2e;border-radius:var(--rs);padding:14px;margin-bottom:12px;position:relative">
+      <div style="font-size:10px;color:#7c7c9c;font-weight:700;letter-spacing:.5px;margin-bottom:6px">YOUR SHORTCUT URL</div>
+      <code id="shortcut-url-display" style="font-size:11px;color:#a9ffa9;word-break:break-all;line-height:1.7">https://anusa6538.github.io/glow-up-journey/?steps=[steps]&amp;hr=[hr]&amp;sleep=[sleep_hrs]&amp;weight=[weight_kg]&amp;sys=[systolic]&amp;dia=[diastolic]</code>
+      <button onclick="copyShortcutURL()" style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.1);border:none;border-radius:7px;color:white;font-size:11px;padding:4px 10px;cursor:pointer;font-weight:600" id="copy-url-btn">Copy</button>
+    </div>
+
+    <div style="background:var(--lavender-light);border-radius:var(--rs);padding:10px 14px;font-size:12px;line-height:1.7;color:var(--text)">
+      💡 <strong>Tip:</strong> To run automatically — go to <strong>Automation</strong> tab in Shortcuts → New Automation → <strong>Time of Day</strong> → set 8am → select your shortcut. Your data will load every morning without lifting a finger! 🌅
+    </div>
+  </div>
+
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px">
 
     <!-- Steps -->
@@ -2293,6 +2351,63 @@ function openMealDBModal(meal) {
 }
 
 // ════════════════════════════════════════════════════════════
+//  APPLE SHORTCUTS URL PARAM READER
+// ════════════════════════════════════════════════════════════
+function readURLParams() {
+  const p = new URLSearchParams(window.location.search);
+  if (!p.has('steps') && !p.has('hr') && !p.has('sleep') && !p.has('weight') && !p.has('sys')) return;
+
+  if (!healthData[today]) healthData[today] = { stepsGoal: 10000 };
+  const d = healthData[today];
+  const synced = [];
+
+  const steps = parseInt(p.get('steps'));
+  if (!isNaN(steps) && steps > 0) { d.steps = steps; synced.push(`${steps.toLocaleString()} steps`); }
+
+  const hr = parseInt(p.get('hr'));
+  if (!isNaN(hr) && hr > 0) { d.hr = hr; synced.push(`HR ${hr} bpm`); }
+
+  const sleep = parseFloat(p.get('sleep'));
+  if (!isNaN(sleep) && sleep > 0) { d.sleep = Math.round(sleep * 10) / 10; synced.push(`${d.sleep}h sleep`); }
+
+  const weight = parseFloat(p.get('weight'));
+  if (!isNaN(weight) && weight > 0) {
+    d.weight = weight;
+    d.weightUnit = p.get('wunit') || 'kg';
+    synced.push(`${weight} ${d.weightUnit}`);
+  }
+
+  const sys = parseInt(p.get('sys')), dia = parseInt(p.get('dia'));
+  if (!isNaN(sys) && !isNaN(dia) && sys > 0 && dia > 0) {
+    d.sys = sys; d.dia = dia;
+    synced.push(`BP ${sys}/${dia}`);
+  }
+
+  saveHealth();
+
+  // Show toast
+  if (synced.length) {
+    const toast = document.getElementById('shortcut-toast');
+    document.getElementById('shortcut-toast-detail').textContent = synced.join(' · ') + ' · synced from Apple Health ✅';
+    toast.style.display = 'flex';
+    setTimeout(() => toast.style.display = 'none', 6000);
+  }
+
+  // Clean URL so refresh doesn't re-apply
+  window.history.replaceState({}, '', window.location.pathname);
+}
+
+function copyShortcutURL() {
+  const url = 'https://anusa6538.github.io/glow-up-journey/?steps=[steps]&hr=[hr]&sleep=[sleep_hrs]&weight=[weight_kg]&sys=[systolic]&dia=[diastolic]';
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('copy-url-btn');
+    btn.textContent = 'Copied!';
+    btn.style.background = 'var(--green)';
+    setTimeout(() => { btn.textContent = 'Copy'; btn.style.background = 'rgba(255,255,255,.1)'; }, 2000);
+  });
+}
+
+// ════════════════════════════════════════════════════════════
 //  APPLE HEALTH XML IMPORT
 // ════════════════════════════════════════════════════════════
 function triggerHealthImport() {
@@ -2380,6 +2495,7 @@ initState();
 initHeader();
 initTip();
 initAffirmation();
+readURLParams();
 initMeals();
 renderHydration();
 updateStats();
