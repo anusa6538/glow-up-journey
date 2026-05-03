@@ -1,4 +1,4 @@
-const CACHE = 'glow-up-v1';
+const CACHE = 'glow-up-v2';
 const ASSETS = [
   './glow-up-journey.html',
   './manifest.json',
